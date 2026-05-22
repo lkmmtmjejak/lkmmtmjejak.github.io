@@ -532,48 +532,58 @@ document.getElementById("bg-music");
 const musicToggle =
 document.getElementById("music-toggle");
 
-// Set volume
-backgroundMusic.volume = 0.4;
+if (backgroundMusic && musicToggle) {
 
-// Try autoplay
-backgroundMusic.play().catch(() => {
+    backgroundMusic.volume = 0.4;
 
-    // Browser blocked autoplay
-    // Play after first interaction
+    let musicStarted = false;
 
-    function startMusic() {
+    function startBackgroundMusic() {
 
-        backgroundMusic.play();
+        if (musicStarted) {
 
-        window.removeEventListener("click", startMusic);
-        window.removeEventListener("scroll", startMusic);
-        window.removeEventListener("mousemove", startMusic);
+            return;
 
-    }
+        }
 
-    window.addEventListener("click", startMusic);
-    window.addEventListener("scroll", startMusic);
-    window.addEventListener("mousemove", startMusic);
+        backgroundMusic.play()
+        .then(() => {
 
-});
+            musicStarted = true;
 
+        })
+        .catch(error => {
 
-// ==========================================
-// TOMBOL MUSIK
-// ==========================================
+            console.log("Autoplay blocked:", error);
 
-musicToggle.addEventListener("click", () => {
-
-    if (backgroundMusic.paused) {
-
-        backgroundMusic.play();
-        musicToggle.textContent = "🔊";
-
-    } else {
-
-        backgroundMusic.pause();
-        musicToggle.textContent = "🔇";
+        });
 
     }
 
-});
+    // User interaction triggers
+    window.addEventListener("click", startBackgroundMusic);
+
+    window.addEventListener("scroll", startBackgroundMusic);
+
+    window.addEventListener("mousemove", startBackgroundMusic);
+
+    window.addEventListener("keydown", startBackgroundMusic);
+
+    // Toggle button
+    musicToggle.addEventListener("click", () => {
+
+        if (backgroundMusic.paused) {
+
+            backgroundMusic.play();
+            musicToggle.textContent = "🔊";
+
+        } else {
+
+            backgroundMusic.pause();
+            musicToggle.textContent = "🔇";
+
+        }
+
+    });
+
+}
