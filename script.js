@@ -559,7 +559,7 @@ backgroundMusic.play().catch(() => {
 
 
 // ==========================================
-// MUSIC TOGGLE BUTTON
+// TOMBOL MUSIK
 // ==========================================
 
 musicToggle.addEventListener("click", () => {
