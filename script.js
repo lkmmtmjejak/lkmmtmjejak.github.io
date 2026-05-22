@@ -210,3 +210,147 @@ window.addEventListener("scroll", showOnScroll);
 
 // Run animation on first load
 showOnScroll();
+
+
+// ==========================================
+// TIME-BOUND LOCK FOR RECRUITMENT CARDS
+// ==========================================
+
+const timeLockedBoxes = document.querySelectorAll(".time-locked-box");
+
+function padCountdownValue(value) {
+
+    return String(value).padStart(2, "0");
+
+}
+
+function unlockBox(box) {
+
+    box.classList.remove("is-locked");
+    box.classList.add("is-unlocked");
+
+}
+
+function updateCountdownBox(box, nowMs) {
+
+    const openTimeValue = box.getAttribute("data-open-time");
+    const openTimeMs = Date.parse(openTimeValue);
+
+    // Invalid date should not keep the section locked.
+    if (Number.isNaN(openTimeMs)) {
+
+        unlockBox(box);
+        return false;
+
+    }
+
+    const remainingMs = openTimeMs - nowMs;
+
+    if (remainingMs <= 0) {
+
+        unlockBox(box);
+        return false;
+
+    }
+
+    const totalSeconds = Math.floor(remainingMs / 1000);
+    const days = Math.floor(totalSeconds / 86400);
+    const hours = Math.floor((totalSeconds % 86400) / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+
+    const dayElement = box.querySelector('[data-unit="days"]');
+    const hourElement = box.querySelector('[data-unit="hours"]');
+    const minuteElement = box.querySelector('[data-unit="minutes"]');
+    const secondElement = box.querySelector('[data-unit="seconds"]');
+
+    if (dayElement) {
+
+        dayElement.textContent = padCountdownValue(days);
+
+    }
+
+    if (hourElement) {
+
+        hourElement.textContent = padCountdownValue(hours);
+
+    }
+
+    if (minuteElement) {
+
+        minuteElement.textContent = padCountdownValue(minutes);
+
+    }
+
+    if (secondElement) {
+
+        secondElement.textContent = padCountdownValue(seconds);
+
+    }
+
+    return true;
+
+}
+
+function initTimeLocks() {
+
+    if (!timeLockedBoxes.length) {
+
+        return;
+
+    }
+
+    let hasActiveLock = false;
+    const nowMs = Date.now();
+
+    timeLockedBoxes.forEach(box => {
+
+        const openTimeLabel = box.getAttribute("data-open-time-label");
+        const openTimeElement = box.querySelector(".lock-open-time");
+
+        if (openTimeElement && openTimeLabel) {
+
+            openTimeElement.textContent = openTimeLabel;
+
+        }
+
+        if (updateCountdownBox(box, nowMs)) {
+
+            hasActiveLock = true;
+
+        }
+
+    });
+
+    if (!hasActiveLock) {
+
+        return;
+
+    }
+
+    const countdownInterval = setInterval(() => {
+
+        const currentNowMs = Date.now();
+        let stillLocked = false;
+
+        timeLockedBoxes.forEach(box => {
+
+            if (box.classList.contains("is-locked") && updateCountdownBox(box, currentNowMs)) {
+
+                stillLocked = true;
+
+            }
+
+        });
+
+        if (!stillLocked) {
+
+            clearInterval(countdownInterval);
+
+        }
+
+    }, 1000);
+
+}
+
+initTimeLocks();
