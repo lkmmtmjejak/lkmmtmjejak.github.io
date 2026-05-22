@@ -354,3 +354,170 @@ function initTimeLocks() {
 }
 
 initTimeLocks();
+
+
+// ==========================================
+// GATED ANNOUNCEMENT LINKS
+// ==========================================
+
+const announcementLinks = document.querySelectorAll(".announcement-gated-link");
+
+let announcementModal = null;
+let announcementModalMessage = null;
+let announcementModalClose = null;
+
+function createAnnouncementModal() {
+
+    if (announcementModal) {
+
+        return;
+
+    }
+
+    announcementModal = document.createElement("div");
+    announcementModal.className = "announcement-modal";
+    announcementModal.setAttribute("aria-hidden", "true");
+
+    announcementModal.innerHTML = `
+        <div class="announcement-modal-card" role="dialog" aria-modal="true" aria-label="Informasi Pengumuman">
+            <h3>Open Recruitment</h3>
+            <p class="announcement-modal-message"></p>
+            <button type="button" class="announcement-modal-close">Oke, siap</button>
+        </div>
+    `;
+
+    document.body.appendChild(announcementModal);
+
+    announcementModalMessage = announcementModal.querySelector(".announcement-modal-message");
+    announcementModalClose = announcementModal.querySelector(".announcement-modal-close");
+
+    announcementModal.addEventListener("click", event => {
+
+        if (event.target === announcementModal) {
+
+            hideAnnouncementModal();
+
+        }
+
+    });
+
+    if (announcementModalClose) {
+
+        announcementModalClose.addEventListener("click", hideAnnouncementModal);
+
+    }
+
+    window.addEventListener("keydown", event => {
+
+        if (event.key === "Escape" && announcementModal.classList.contains("show")) {
+
+            hideAnnouncementModal();
+
+        }
+
+    });
+
+}
+
+function showAnnouncementModal(message) {
+
+    createAnnouncementModal();
+
+    if (!announcementModal || !announcementModalMessage) {
+
+        alert(message);
+        return;
+
+    }
+
+    announcementModalMessage.textContent = message;
+    announcementModal.classList.add("show");
+    announcementModal.setAttribute("aria-hidden", "false");
+
+    if (announcementModalClose) {
+
+        announcementModalClose.focus();
+
+    }
+
+}
+
+function hideAnnouncementModal() {
+
+    if (!announcementModal) {
+
+        return;
+
+    }
+
+    announcementModal.classList.remove("show");
+    announcementModal.setAttribute("aria-hidden", "true");
+
+}
+
+function getUnlockTimeFromKey(lockKey) {
+
+    if (!lockKey) {
+
+        return NaN;
+
+    }
+
+    const sourceBox = document.querySelector(`.time-locked-box[data-lock-key="${lockKey}"]`);
+
+    if (!sourceBox) {
+
+        return NaN;
+
+    }
+
+    return Date.parse(sourceBox.getAttribute("data-open-time") || "");
+
+}
+
+function getUnlockTimeForAnnouncement(link) {
+
+    const fixedUnlockTime = link.getAttribute("data-unlock-time");
+
+    if (fixedUnlockTime) {
+
+        return Date.parse(fixedUnlockTime);
+
+    }
+
+    const unlockFromKey = link.getAttribute("data-unlock-from");
+    return getUnlockTimeFromKey(unlockFromKey);
+
+}
+
+function initAnnouncementGates() {
+
+    if (!announcementLinks.length) {
+
+        return;
+
+    }
+
+    announcementLinks.forEach(link => {
+
+        link.addEventListener("click", event => {
+
+            const unlockTimeMs = getUnlockTimeForAnnouncement(link);
+
+            if (!Number.isNaN(unlockTimeMs) && Date.now() < unlockTimeMs) {
+
+                event.preventDefault();
+                const message =
+                    link.getAttribute("data-locked-message") ||
+                    "Sabar yaa, see you very soon! ⸜(｡˃ ᵕ ˂ )⸝♡";
+                showAnnouncementModal(message);
+
+            }
+
+        });
+
+    });
+
+}
+
+initAnnouncementGates();

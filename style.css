@@ -645,6 +645,63 @@ main{
 }
 
 /* ==========================================
+   ANNOUNCEMENT POPUP
+========================================== */
+
+.announcement-modal{
+    position: fixed;
+    inset: 0;
+    z-index: 1200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(56, 34, 34, 0.34);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.announcement-modal.show{
+    display: flex;
+}
+
+.announcement-modal-card{
+    width: min(460px, 100%);
+    border-radius: 22px;
+    background: linear-gradient(180deg, rgba(255, 251, 247, 0.98), rgba(248, 239, 231, 0.98));
+    border: 1px solid rgba(122, 78, 78, 0.16);
+    box-shadow: 0 24px 46px rgba(54, 32, 32, 0.26);
+    padding: 22px 20px 18px;
+    text-align: center;
+}
+
+.announcement-modal-card h3{
+    font-family: 'Fraunces', serif;
+    color: var(--accent-dark);
+    font-size: clamp(1.3rem, 2.2vw, 1.7rem);
+    margin-bottom: 8px;
+}
+
+.announcement-modal-card p{
+    color: var(--text);
+    font-size: 1rem;
+    line-height: 1.65;
+    text-align: center;
+}
+
+.announcement-modal-close{
+    margin-top: 14px;
+    border: 0;
+    padding: 10px 20px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.92rem;
+    color: #fff;
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    box-shadow: 0 12px 22px rgba(143, 81, 81, 0.30);
+}
+
+/* ==========================================
    FOOTER
 ========================================== */
 
@@ -884,6 +941,11 @@ main{
     .lock-open-time{
         font-size: 0.8rem;
         line-height: 1.45;
+    }
+
+    .announcement-modal-card{
+        border-radius: 18px;
+        padding: 18px 14px 14px;
     }
 
     .sejarah-grid,
