@@ -560,7 +560,7 @@ if (backgroundMusic && musicToggle) {
 
     }
 
-    // User interaction triggers
+    // Trigger musiknya
     window.addEventListener("click", startBackgroundMusic);
 
     window.addEventListener("scroll", startBackgroundMusic);
