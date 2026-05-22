@@ -380,7 +380,7 @@ function createAnnouncementModal() {
 
     announcementModal.innerHTML = `
         <div class="announcement-modal-card" role="dialog" aria-modal="true" aria-label="Informasi Pengumuman">
-            <h3>Open Recruitment</h3>
+            <h3>Recruitment</h3>
             <p class="announcement-modal-message"></p>
             <button type="button" class="announcement-modal-close">Oke, siap</button>
         </div>
