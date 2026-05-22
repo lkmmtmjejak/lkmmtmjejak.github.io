@@ -576,6 +576,18 @@ main > .content-box:last-of-type{
     box-shadow: 0 8px 16px rgba(64, 43, 43, 0.07);
 }
 
+@media (min-width: 961px){
+    .logo-meaning-item.golden-shadow{
+        grid-column: 1 / -1;
+        align-items: center;
+    }
+
+    .logo-meaning-item.golden-shadow .logo-meaning-image{
+        width: 96px;
+        flex-basis: 96px;
+    }
+}
+
 .logo-meaning-image{
     width: 86px;
     flex: 0 0 86px;
@@ -1188,6 +1200,10 @@ a.team-card.spesial {
         gap: 10px;
         padding: 8px;
         border-radius: 14px;
+    }
+
+    .logo-meaning-item.golden-shadow{
+        grid-column: auto;
     }
 
     .logo-meaning-image{
