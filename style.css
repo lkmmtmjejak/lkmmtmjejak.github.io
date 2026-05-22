@@ -1,0 +1,887 @@
+/* ==========================================
+   RESET
+========================================== */
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+/* ==========================================
+   TOKENS + BODY
+========================================== */
+
+:root{
+    --bg: #f4eee7;
+    --bg-strong: #efe6dd;
+    --surface: rgba(255, 251, 247, 0.92);
+    --surface-strong: #ffffff;
+    --text: #402b2b;
+    --muted: #6b4a4a;
+    --accent: #b06d6d;
+    --accent-dark: #8f5151;
+    --accent-soft: rgba(176, 109, 109, 0.12);
+    --border: rgba(122, 78, 78, 0.12);
+    --shadow: 0 18px 40px rgba(76, 45, 45, 0.10);
+    --shadow-strong: 0 24px 60px rgba(76, 45, 45, 0.16);
+}
+
+body{
+    min-height: 100vh;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--text);
+    background:
+        radial-gradient(circle at top left, rgba(176, 109, 109, 0.16), transparent 34%),
+        radial-gradient(circle at top right, rgba(143, 81, 81, 0.12), transparent 28%),
+        linear-gradient(180deg, #fcf9f6 0%, var(--bg) 34%, #f8f1ea 100%);
+    overflow-x: hidden;
+    position: relative;
+    cursor: none;
+}
+
+body *{
+    cursor: none;
+}
+
+.butterfly-cursor{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    font-size: 28px;
+    line-height: 1;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-9999px, -9999px) scaleX(-1);
+    transform-origin: center center;
+    filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.18));
+    transition: transform 0.03s linear;
+    will-change: transform;
+}
+
+.butterfly-cursor::before{
+    content: "🦋";
+    transform: scaleX(-1);
+}
+
+@media (pointer: coarse){
+    body,
+    body *{
+        cursor: auto;
+    }
+
+    .butterfly-cursor{
+        display: none;
+    }
+}
+
+body::before,
+body::after{
+    content: "";
+    position: fixed;
+    inset: auto;
+    width: 32rem;
+    height: 32rem;
+    border-radius: 50%;
+    filter: blur(35px);
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: -1;
+}
+
+body::before{
+    top: -8rem;
+    right: -10rem;
+    background: rgba(176, 109, 109, 0.22);
+}
+
+body::after{
+    left: -12rem;
+    bottom: -10rem;
+    background: rgba(122, 78, 78, 0.18);
+}
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.main-header{
+    width: min(1200px, 94%);
+    height: clamp(220px, 28vw, 360px);
+    margin: 16px auto 0;
+    overflow: hidden;
+    position: relative;
+    border-radius: 34px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: var(--shadow-strong);
+    background: #d9c2b5;
+}
+
+.main-header::after{
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(180deg, rgba(39, 21, 21, 0.04) 0%, rgba(39, 21, 21, 0.22) 100%),
+        linear-gradient(90deg, rgba(176, 109, 109, 0.12), transparent 38%, transparent 62%, rgba(176, 109, 109, 0.10));
+    pointer-events: none;
+}
+
+.header-image{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.navbar{
+    width: min(1200px, 94%);
+    margin: 16px auto 0;
+    padding: 14px 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 18px;
+    position: sticky;
+    top: 16px;
+    z-index: 999;
+    background: rgba(255, 251, 247, 0.82);
+    border: 1px solid rgba(122, 78, 78, 0.12);
+    border-radius: 999px;
+    box-shadow: 0 16px 35px rgba(61, 40, 40, 0.12);
+    backdrop-filter: blur(18px) saturate(1.15);
+    -webkit-backdrop-filter: blur(18px) saturate(1.15);
+}
+
+.logo{
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.2rem, 2vw, 1.75rem);
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    color: var(--accent-dark);
+    white-space: nowrap;
+}
+
+.nav-links{
+    display: flex;
+    gap: 10px;
+    list-style: none;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.nav-links a{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 16px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 1rem;
+    line-height: 1;
+    color: var(--muted);
+    background: transparent;
+    transition: transform 0.25s ease, background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.nav-links a:hover{
+    color: var(--accent-dark);
+    background: var(--accent-soft);
+    box-shadow: 0 10px 20px rgba(176, 109, 109, 0.12);
+    transform: translateY(-1px);
+}
+
+.nav-links a.active{
+    color: #fff;
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    box-shadow: 0 14px 24px rgba(143, 81, 81, 0.28);
+    font-weight: 700;
+}
+
+/* ==========================================
+   MAIN CONTENT
+========================================== */
+
+main{
+    width: 100%;
+    padding-bottom: 24px;
+}
+
+/* ==========================================
+   PAGE SECTION
+========================================== */
+
+.page-section{
+    display: none;
+    padding-top: 36px;
+    animation: fadePage 0.65s ease;
+}
+
+.active-section{
+    display: block;
+}
+
+@keyframes fadePage{
+    from{
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to{
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==========================================
+   CONTENT BOX
+========================================== */
+
+.content-box{
+    width: min(1200px, 94%);
+    margin: 0 auto 24px;
+    padding: clamp(24px, 3vw, 44px);
+    border-radius: 28px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(250, 245, 240, 0.94));
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+.content-box::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, rgba(176, 109, 109, 0.72), transparent);
+}
+
+.content-box h1,
+.content-box h2,
+.content-box h3{
+    font-family: 'Fraunces', serif;
+    color: var(--accent-dark);
+    line-height: 1.15;
+}
+
+.content-box h1{
+    font-size: clamp(2.5rem, 4vw, 4.2rem);
+    margin-bottom: 18px;
+}
+
+.content-box h2{
+    font-size: clamp(2rem, 3vw, 3.2rem);
+    margin-bottom: 18px;
+}
+
+.content-box h3{
+    font-size: clamp(1.45rem, 2vw, 2rem);
+}
+
+.content-box p{
+    font-size: clamp(1rem, 1.1vw + 0.75rem, 1.18rem);
+    line-height: 1.75;
+    color: var(--text);
+    max-width: none;
+    width: 100%;
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: auto;
+}
+
+.timeline-hint{
+    margin-top: 8px;
+    margin-bottom: 8px;
+    font-size: 0.92rem;
+    color: var(--muted);
+    font-style: italic;
+}
+
+.page-section#home .sejarah-card p,
+.page-section#home .sejarah-card h3{
+    text-align: center;
+}
+
+/* ==========================================
+   GRID / CARD SHARED STYLES
+========================================== */
+
+.sejarah-timeline,
+.sejarah-grid,
+.pemberkasan-grid,
+.tes-grid,
+.interview-grid,
+.team-grid{
+    margin-top: 24px;
+    display: grid;
+    gap: 18px;
+}
+
+.sejarah-timeline{
+    --timeline-card-width: clamp(220px, 26vw, 300px);
+    display: flex;
+    gap: 18px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 14px 4px 12px;
+    scroll-snap-type: x mandatory;
+    touch-action: pan-x;
+    counter-reset: sejarah;
+    position: relative;
+}
+
+.sejarah-timeline::before{
+    display: none;
+}
+
+.sejarah-grid,
+.pemberkasan-grid,
+.tes-grid,
+.interview-grid{
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.team-grid{
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.komisi-grid{
+    width: min(1200px, 94%);
+    margin: 0 auto 24px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.komisi-grid > .content-box{
+    width: 100%;
+    margin: 0;
+}
+
+.komisi-grid > .content-box h2{
+    font-size: clamp(1.5rem, 1.4vw + 0.8rem, 2rem);
+    margin-bottom: 14px;
+}
+
+.sejarah-card,
+.pemberkasan-card,
+.tes-card,
+.interview-card,
+.team-card{
+    padding: 24px 18px;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.78);
+    border: 1px solid rgba(122, 78, 78, 0.10);
+    box-shadow: 0 10px 22px rgba(64, 43, 43, 0.06);
+    text-align: center;
+    transition: transform 0.28s ease, box-shadow 0.28s ease, background-color 0.28s ease;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.sejarah-card{
+    flex: 0 0 var(--timeline-card-width);
+    min-height: 220px;
+    text-align: left;
+    scroll-snap-align: start;
+    position: relative;
+    z-index: 1;
+    padding-top: 60px;
+}
+
+.sejarah-card::before{
+    counter-increment: sejarah;
+    content: counter(sejarah);
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    box-shadow: 0 10px 18px rgba(143, 81, 81, 0.24);
+    z-index: 3;
+}
+
+.sejarah-card:hover,
+.pemberkasan-card:hover,
+.tes-card:hover,
+.interview-card:hover,
+.team-card:hover{
+    transform: translateY(-4px);
+    box-shadow: 0 16px 30px rgba(64, 43, 43, 0.10);
+    background: rgba(255, 249, 244, 0.92);
+}
+
+.sejarah-card:hover{
+    z-index: 3;
+}
+
+.sejarah-card:hover::before{
+    z-index: 4;
+}
+
+.sejarah-card{
+    color: var(--accent-dark);
+}
+
+.sejarah-card h3,
+.sejarah-card p{
+    text-align: center;
+}
+
+.sejarah-card h3,
+.pemberkasan-card h3,
+.tes-card h3,
+.interview-card h3,
+.team-card h3{
+    margin-bottom: 16px;
+}
+
+.sejarah-card p,
+.pemberkasan-card p,
+.tes-card p,
+.interview-card p,
+.team-card p{
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--muted);
+    max-width: none;
+}
+
+.sejarah-card p{
+    text-align: left;
+    text-justify: auto;
+    hyphens: none;
+}
+
+/* ==========================================
+   MEDIA / IMAGE STYLES
+========================================== */
+
+.timeline-image,
+.division-image,
+.logo-jejak{
+    width: 100%;
+    display: block;
+    border-radius: 24px;
+    box-shadow: 0 16px 30px rgba(64, 43, 43, 0.10);
+}
+
+.timeline-image,
+.division-image{
+    margin-top: 20px;
+    object-fit: cover;
+}
+
+.logo-jejak{
+    max-width: 480px;
+    margin: 20px auto 0;
+}
+
+.team-photo{
+    width: min(180px, 100%);
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+    margin: 0 auto 20px;
+    border: 5px solid rgba(176, 109, 109, 0.12);
+    box-shadow: 0 14px 24px rgba(64, 43, 43, 0.10);
+}
+
+/* ==========================================
+   GRID SPECIAL CASES
+========================================== */
+
+.last-card{
+    grid-column: auto;
+}
+
+.leader-card{
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: min(420px, 100%);
+}
+
+.last-member{
+    grid-column: auto;
+}
+
+.second-row{
+    grid-column: auto;
+}
+
+/* ==========================================
+   BUTTONS
+========================================== */
+
+.main-button{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 320px;
+    margin-top: 24px;
+    padding: 14px 24px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    box-shadow: 0 16px 28px rgba(143, 81, 81, 0.24);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+}
+
+.main-button:hover{
+    transform: translateY(-2px);
+    filter: brightness(1.03);
+    box-shadow: 0 20px 32px rgba(143, 81, 81, 0.30);
+}
+
+/* ==========================================
+   FOOTER
+========================================== */
+
+.main-footer{
+    margin-top: 64px;
+    padding: 48px 0 28px;
+    background: linear-gradient(180deg, #7a4e4e 0%, #5d3939 100%);
+    color: #fff;
+}
+
+.footer-container{
+    width: min(1200px, 94%);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+}
+
+.footer-box{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.footer-box h3{
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.6rem, 2vw, 2.1rem);
+    margin-bottom: 18px;
+}
+
+.footer-icons{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+.footer-icons a{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    padding: 0;
+    border-radius: 16px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 12px 18px rgba(0, 0, 0, 0.18);
+    transition: transform 0.22s ease, box-shadow 0.22s ease, background-color 0.22s ease;
+}
+
+.footer-icons a:hover{
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 16px 24px rgba(0, 0, 0, 0.24);
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.footer-box a{
+    color: inherit;
+    text-decoration: none;
+}
+
+.social-icon{
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    border-radius: inherit;
+}
+
+.fb-wrapper {
+    display: inline-block;
+    background-color: #ffffff; /* Warna putih untuk mengisi huruf 'f' yang bolong */
+    border-radius: 22%;        /* Menjaga bentuk rounded-nya */
+    line-height: 0;            /* Menghilangkan whitespace bawaan tag inline */
+}
+
+.footer-text{
+    width: min(1200px, 94%);
+    margin: 28px auto 0;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+    text-align: center;
+    font-family: 'Fraunces', serif;
+    font-size: 1.02rem;
+    letter-spacing: 0.24em;
+}
+
+/* ==========================================
+   FADE-UP ANIMATION
+========================================== */
+
+.fade-up{
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.fade-up.show{
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 1024px){
+    .navbar{
+        width: min(1200px, 96%);
+        padding: 12px 18px;
+    }
+
+    .logo{
+        white-space: normal;
+    }
+}
+
+@media (max-width: 768px){
+    .navbar{
+        width: 94%;
+        margin: 12px auto 0;
+        padding: 12px 12px 14px;
+        border-radius: 22px;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .logo{
+        width: 100%;
+        text-align: center;
+        white-space: normal;
+    }
+
+    .nav-links{
+        width: 100%;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .nav-links li{
+        flex: 1 1 0;
+        min-width: 0;
+    }
+
+    .nav-links a{
+        width: 100%;
+        padding: 9px 8px;
+        font-size: 0.84rem;
+        text-align: center;
+        line-height: 1.05;
+        white-space: normal;
+    }
+
+    .main-header{
+        width: 94%;
+        height: 180px;
+        border-radius: 24px;
+    }
+
+    .content-box{
+        width: 94%;
+        border-radius: 22px;
+        padding: 20px 16px;
+    }
+
+    .page-section{
+        padding-top: 18px;
+    }
+
+    .content-box h1{
+        font-size: clamp(2rem, 8vw, 2.7rem);
+    }
+
+    .content-box h2{
+        font-size: clamp(1.6rem, 6.6vw, 2.2rem);
+    }
+
+    .content-box p{
+        font-size: 0.98rem;
+        line-height: 1.68;
+        text-align: justify;
+        text-justify: inter-word;
+    }
+
+    .timeline-hint{
+        font-size: 0.84rem;
+    }
+
+    .sejarah-timeline{
+        --timeline-card-width: 220px;
+        gap: 14px;
+        padding: 12px 2px 10px;
+    }
+
+    .sejarah-timeline::before{
+        top: 27px;
+    }
+
+    .sejarah-card{
+        flex-basis: 220px;
+        min-height: 200px;
+        padding-top: 54px;
+    }
+
+    .main-button{
+        max-width: none;
+        font-size: 0.9rem;
+        padding: 12px 16px;
+    }
+
+    .sejarah-grid,
+    .pemberkasan-grid,
+    .tes-grid,
+    .interview-grid,
+    .team-grid{
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .komisi-grid{
+        width: 94%;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+    }
+
+    .komisi-grid > .content-box h2{
+        font-size: clamp(1.35rem, 3.8vw, 1.7rem);
+    }
+
+    .leader-card{
+        width: 100%;
+    }
+
+    .footer-container{
+        grid-template-columns: 1fr;
+    }
+
+    .footer-box{
+        align-items: center;
+        text-align: center;
+    }
+
+    .footer-icons{
+        justify-content: center;
+    }
+
+    .footer-icons a{
+        width: 52px;
+        height: 52px;
+        border-radius: 16px;
+    }
+
+    .footer-text{
+        letter-spacing: 0.16em;
+        font-size: 0.84rem;
+    }
+}
+
+@media (max-width: 540px){
+    .main-header{
+        width: 92%;
+        height: 160px;
+    }
+
+    .navbar{
+        width: 92%;
+        padding: 10px 10px 12px;
+    }
+
+    .content-box{
+        width: 92%;
+        padding: 18px 14px;
+        border-radius: 18px;
+    }
+
+    .content-box p{
+        font-size: 0.96rem;
+    }
+
+    .sejarah-timeline{
+        --timeline-card-width: 190px;
+    }
+
+    .sejarah-timeline{
+        gap: 12px;
+    }
+
+    .sejarah-card{
+        flex-basis: 190px;
+        min-height: 190px;
+    }
+
+    .komisi-grid{
+        grid-template-columns: 1fr;
+    }
+
+    .komisi-grid > .content-box h2{
+        font-size: clamp(1.25rem, 5vw, 1.5rem);
+    }
+
+    .sejarah-card,
+    .pemberkasan-card,
+    .tes-card,
+    .interview-card,
+    .team-card{
+        padding: 18px 14px;
+    }
+
+    .team-photo{
+        width: 120px;
+    }
+
+    .footer-icons a{
+        width: 48px;
+        height: 48px;
+        border-radius: 14px;
+    }
+
+    .footer-box h3,
+    .content-box h1,
+    .content-box h2,
+    .content-box h3{
+        text-wrap: balance;
+    }
+}
