@@ -695,10 +695,40 @@ main > .content-box:last-of-type{
     }
 }
 
+@media (hover: none), (pointer: coarse){
+    .team-card.spesial,
+    .team-card.spesial:hover{
+        z-index: auto;
+    }
+
+    .team-card.spesial .team-photo,
+    .team-card.spesial:hover .team-photo,
+    .team-card.spesial .name-full,
+    .team-card.spesial:hover .name-full,
+    .team-card.spesial .name-short,
+    .team-card.spesial:hover .name-short{
+        transform: none;
+        animation: none;
+        filter: none;
+    }
+
+    .team-card.spesial .name-full,
+    .team-card.spesial:hover .name-full{
+        display: none;
+        opacity: 0;
+    }
+
+    .team-card.spesial .name-short{
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
 a.team-card.spesial {
     display: block;        /* Membuat link berbentuk kotak (box) seperti div */
     text-decoration: none; /* Menghilangkan garis bawah bawaan browser */
     color: inherit;        /* Mengikuti warna teks asli yang sudah kamu atur */
+    touch-action: manipulation;
 }
 
 /* ==========================================
