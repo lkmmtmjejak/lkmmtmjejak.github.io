@@ -521,3 +521,59 @@ function initAnnouncementGates() {
 }
 
 initAnnouncementGates();
+
+// ==========================================
+// BACKGROUND MUSIC
+// ==========================================
+
+const backgroundMusic =
+document.getElementById("bg-music");
+
+const musicToggle =
+document.getElementById("music-toggle");
+
+// Set volume
+backgroundMusic.volume = 0.4;
+
+// Try autoplay
+backgroundMusic.play().catch(() => {
+
+    // Browser blocked autoplay
+    // Play after first interaction
+
+    function startMusic() {
+
+        backgroundMusic.play();
+
+        window.removeEventListener("click", startMusic);
+        window.removeEventListener("scroll", startMusic);
+        window.removeEventListener("mousemove", startMusic);
+
+    }
+
+    window.addEventListener("click", startMusic);
+    window.addEventListener("scroll", startMusic);
+    window.addEventListener("mousemove", startMusic);
+
+});
+
+
+// ==========================================
+// MUSIC TOGGLE BUTTON
+// ==========================================
+
+musicToggle.addEventListener("click", () => {
+
+    if (backgroundMusic.paused) {
+
+        backgroundMusic.play();
+        musicToggle.textContent = "🔊";
+
+    } else {
+
+        backgroundMusic.pause();
+        musicToggle.textContent = "🔇";
+
+    }
+
+});
