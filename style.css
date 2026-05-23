@@ -814,6 +814,13 @@ a.team-card.spesial {
     box-shadow: 0 20px 32px rgba(143, 81, 81, 0.30);
 }
 
+.main-button-full{
+    max-width: none;
+    width: 100%;
+    font-size: 1.05rem;
+    padding: 16px 24px;
+}
+
 /* ==========================================
    TIME LOCK OVERLAY
 ========================================== */
