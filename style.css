@@ -508,6 +508,27 @@ main > .content-box:last-of-type{
     hyphens: none;
 }
 
+/* Reset button styling for sejarah-card */
+.sejarah-card[type="button"],
+button.sejarah-card{
+    font-family: inherit;
+    font-size: inherit;
+    border: inherit;
+    background: inherit;
+    color: inherit;
+    cursor: pointer;
+    padding: 24px 18px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-align: center;
+}
+
+button.sejarah-card:focus{
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
 /* ==========================================
    MEDIA / IMAGE STYLES
 ========================================== */

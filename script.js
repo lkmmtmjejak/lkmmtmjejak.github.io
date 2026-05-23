@@ -504,12 +504,21 @@ function initAnnouncementGates() {
 
             const unlockTimeMs = getUnlockTimeForAnnouncement(link);
 
+            // Case 1: Time-gated content - show modal if time hasn't arrived yet
             if (!Number.isNaN(unlockTimeMs) && Date.now() < unlockTimeMs) {
 
                 event.preventDefault();
                 const message =
                     link.getAttribute("data-locked-message") ||
                     "Sabar yaa, see you very soon! ⸜(｡˃ ᵕ ˂ )⸝♡";
+                showAnnouncementModal(message);
+
+            }
+            // Case 2: Non-time-gated content (e.g., sejarah cards) - show modal with locked message if present
+            else if (Number.isNaN(unlockTimeMs) && link.hasAttribute("data-locked-message")) {
+
+                event.preventDefault();
+                const message = link.getAttribute("data-locked-message");
                 showAnnouncementModal(message);
 
             }
