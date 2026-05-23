@@ -364,6 +364,7 @@ const announcementLinks = document.querySelectorAll(".announcement-gated-link");
 
 let announcementModal = null;
 let announcementModalMessage = null;
+let announcementModalTitle = null;
 let announcementModalClose = null;
 
 function createAnnouncementModal() {
@@ -388,6 +389,7 @@ function createAnnouncementModal() {
 
     document.body.appendChild(announcementModal);
 
+    announcementModalTitle = announcementModal.querySelector(".announcement-modal-card h3");
     announcementModalMessage = announcementModal.querySelector(".announcement-modal-message");
     announcementModalClose = announcementModal.querySelector(".announcement-modal-close");
 
@@ -419,7 +421,7 @@ function createAnnouncementModal() {
 
 }
 
-function showAnnouncementModal(message) {
+function showAnnouncementModal(message, title = "Recruitment") {
 
     createAnnouncementModal();
 
@@ -427,6 +429,12 @@ function showAnnouncementModal(message) {
 
         alert(message);
         return;
+
+    }
+
+    if (announcementModalTitle) {
+
+        announcementModalTitle.textContent = title;
 
     }
 
@@ -511,7 +519,7 @@ function initAnnouncementGates() {
                 const message =
                     link.getAttribute("data-locked-message") ||
                     "Sabar yaa, see you very soon! ⸜(｡˃ ᵕ ˂ )⸝♡";
-                showAnnouncementModal(message);
+                showAnnouncementModal(message, "Recruitment");
 
             }
             // Case 2: Non-time-gated content (e.g., sejarah cards) - show modal with locked message if present
@@ -519,7 +527,8 @@ function initAnnouncementGates() {
 
                 event.preventDefault();
                 const message = link.getAttribute("data-locked-message");
-                showAnnouncementModal(message);
+                const title = link.querySelector("h3")?.textContent.trim() || "Sejarah LKMM TM";
+                showAnnouncementModal(message, title);
 
             }
 
