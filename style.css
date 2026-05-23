@@ -355,6 +355,7 @@ main > .content-box:last-of-type{
 
 .sejarah-timeline,
 .sejarah-grid,
+.benefit-grid,
 .pemberkasan-grid,
 .tes-grid,
 .interview-grid,
@@ -382,6 +383,7 @@ main > .content-box:last-of-type{
 }
 
 .sejarah-grid,
+.benefit-grid,
 .pemberkasan-grid,
 .tes-grid,
 .interview-grid{
@@ -411,6 +413,7 @@ main > .content-box:last-of-type{
 }
 
 .sejarah-card,
+.benefit-card,
 .pemberkasan-card,
 .tes-card,
 .interview-card,
@@ -457,6 +460,7 @@ main > .content-box:last-of-type{
 }
 
 .sejarah-card:hover,
+.benefit-card:hover,
 .pemberkasan-card:hover,
 .tes-card:hover,
 .interview-card:hover,
@@ -484,6 +488,7 @@ main > .content-box:last-of-type{
 }
 
 .sejarah-card h3,
+.benefit-card h3,
 .pemberkasan-card h3,
 .tes-card h3,
 .interview-card h3,
@@ -492,6 +497,7 @@ main > .content-box:last-of-type{
 }
 
 .sejarah-card p,
+.benefit-card p,
 .pemberkasan-card p,
 .tes-card p,
 .interview-card p,
@@ -1302,6 +1308,7 @@ a.team-card.spesial {
     }
 
     .sejarah-grid,
+    .benefit-grid,
     .pemberkasan-grid,
     .tes-grid,
     .interview-grid,
@@ -1407,6 +1414,7 @@ a.team-card.spesial {
     }
 
     .sejarah-card,
+    .benefit-card,
     .pemberkasan-card,
     .tes-card,
     .interview-card,
