@@ -2,7 +2,8 @@
 // SELECT ALL NAVBAR BUTTONS
 // ==========================================
 
-const navButtons = document.querySelectorAll(".nav-button");
+const navButtons = document.querySelectorAll(".nav-links .nav-button");
+const sectionSwitchButtons = document.querySelectorAll("[data-section-switch]");
 
 
 // ==========================================
@@ -88,6 +89,37 @@ const pageSections = document.querySelectorAll(".page-section");
 // NAVIGATION SYSTEM
 // ==========================================
 
+function activateSection(targetSection) {
+
+    navButtons.forEach(btn => {
+
+        btn.classList.toggle("active", btn.getAttribute("data-section") === targetSection);
+
+    });
+
+    pageSections.forEach(section => {
+
+        section.classList.remove("active-section");
+
+    });
+
+    const activeSection = document.getElementById(targetSection);
+
+    if (activeSection) {
+
+        activeSection.classList.add("active-section");
+
+    }
+
+    window.scrollTo({
+
+        top: 0,
+        behavior: "smooth"
+
+    });
+
+}
+
 navButtons.forEach(button => {
 
     button.addEventListener("click", (event) => {
@@ -95,71 +127,18 @@ navButtons.forEach(button => {
         // Prevent page refresh
         event.preventDefault();
 
+        activateSection(button.getAttribute("data-section"));
 
+    });
 
-        // ==================================
-        // REMOVE ACTIVE NAVBAR
-        // ==================================
+});
 
-        navButtons.forEach(btn => {
+sectionSwitchButtons.forEach(button => {
 
-            btn.classList.remove("active");
+    button.addEventListener("click", (event) => {
 
-        });
-
-
-
-        // ==================================
-        // ADD ACTIVE NAVBAR
-        // ==================================
-
-        button.classList.add("active");
-
-
-
-        // ==================================
-        // GET TARGET SECTION
-        // ==================================
-
-        const targetSection =
-        button.getAttribute("data-section");
-
-
-
-        // ==================================
-        // HIDE ALL SECTIONS
-        // ==================================
-
-        pageSections.forEach(section => {
-
-            section.classList.remove("active-section");
-
-        });
-
-
-
-        // ==================================
-        // SHOW TARGET SECTION
-        // ==================================
-
-        const activeSection =
-        document.getElementById(targetSection);
-
-        activeSection.classList.add("active-section");
-
-
-
-        // ==================================
-        // SCROLL TO TOP SMOOTHLY
-        // ==================================
-
-        window.scrollTo({
-
-            top: 0,
-
-            behavior: "smooth"
-
-        });
+        event.preventDefault();
+        activateSection(button.getAttribute("data-section-switch"));
 
     });
 

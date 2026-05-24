@@ -390,6 +390,44 @@ main > .content-box:last-of-type{
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 }
 
+.benefit-grid{
+    display: flex;
+    gap: 18px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 14px 4px 16px;
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: 4px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent) rgba(122, 78, 78, 0.14);
+}
+
+.benefit-grid::-webkit-scrollbar{
+    height: 12px;
+}
+
+.benefit-grid::-webkit-scrollbar-track{
+    background: rgba(122, 78, 78, 0.10);
+    border-radius: 999px;
+    margin: 0 6px;
+}
+
+.benefit-grid::-webkit-scrollbar-thumb{
+    background: linear-gradient(90deg, #a66b6b, var(--accent));
+    border: 3px solid rgba(255, 248, 243, 0.9);
+    border-radius: 999px;
+}
+
+.benefit-grid::-webkit-scrollbar-thumb:hover{
+    background: linear-gradient(90deg, var(--accent-dark), #b86d6d);
+}
+
+.benefit-grid::after{
+    content: "";
+    flex: 0 0 6px;
+}
+
 .team-grid{
     grid-template-columns: repeat(4, minmax(0, 1fr));
 }
@@ -427,6 +465,41 @@ main > .content-box:last-of-type{
     transition: transform 0.28s ease, box-shadow 0.28s ease, background-color 0.28s ease;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+}
+
+.benefit-card{
+    flex: 0 0 clamp(240px, 30vw, 320px);
+    min-height: 220px;
+    text-align: left;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+}
+
+.benefit-card::before{
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top right, rgba(184, 109, 109, 0.14), transparent 42%);
+    pointer-events: none;
+}
+
+.benefit-card h3,
+.benefit-card p{
+    position: relative;
+    z-index: 1;
+}
+
+.benefit-card h3{
+    margin-bottom: 14px;
+    line-height: 1.25;
+}
+
+.benefit-card p{
+    margin-top: auto;
 }
 
 .sejarah-card{
@@ -1377,6 +1450,11 @@ a.team-card.spesial {
         font-size: 0.96rem;
     }
 
+    .benefit-grid{
+        gap: 14px;
+        padding: 12px 2px 14px;
+    }
+
     .sejarah-timeline{
         --timeline-card-width: 190px;
     }
@@ -1420,6 +1498,11 @@ a.team-card.spesial {
     .interview-card,
     .team-card{
         padding: 18px 14px;
+    }
+
+    .benefit-card{
+        flex-basis: min(82vw, 290px);
+        min-height: 200px;
     }
 
     .team-photo{
