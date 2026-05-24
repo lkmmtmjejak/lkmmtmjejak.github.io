@@ -21,7 +21,6 @@
     <!-- FONT -->
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
-
 <body>
 
     <!-- ==========================================
@@ -29,13 +28,11 @@
     =========================================== -->
 
     <nav class="navbar">
-
         <div class="logo">
             LKMM TM ITS Jejak 2026
         </div>
 
         <ul class="nav-links">
-
             <li>
                 <a href="#" class="nav-button active"
                    data-section="home">
@@ -54,6 +51,13 @@
                 <a href="#" class="nav-button"
                    data-section="team">
                    Tim Jejak
+                </a>
+            </li>
+
+            <li>
+                <a href="#" class="nav-button"
+                   data-section="alumni">
+                   Alumni
                 </a>
             </li>
 
@@ -822,6 +826,82 @@
 </section>
 
 
+        <!-- ======================================
+             ALUMNI PAGE
+        ======================================= -->
+
+        <section id="alumni"
+                 class="page-section">
+
+            <div class="content-box fade-up alumni-hero">
+                <h1>
+                Sebaran Alumni LKMM-TM ITS
+                </h1>
+
+                <h2>
+                    Tahun 2024-2025
+                </h2>
+
+                <p>
+                    Section chart masih kosong dulu. Fitur visualisasi dan eksplorasi data akan menyusul.
+                </p>
+
+                <div class="alumni-chart-placeholder" aria-label="Area chart alumni">
+                    <span>Chart coming soon</span>
+                </div>
+            </div>
+
+            <div class="content-box fade-up alumni-table-box">
+                <div class="alumni-table-header">
+                    <div>
+                        <h2>Preview Data Alumni</h2>
+                        <p>Menampilkan 10 baris per halaman dari file alumni.csv.</p>
+                    </div>
+
+                    <div class="alumni-pagination-meta" data-alumni-meta>
+                        Memuat data...
+                    </div>
+                </div>
+
+                <div class="alumni-table-wrap">
+                    <table class="alumni-table">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama Lengkap</th>
+                                <th>Fakultas</th>
+                                <th>Ormawa</th>
+                                <th>Jabatan</th>
+                                <th>Tahun Menjabat</th>
+                                <th>LKMM-TM</th>
+                            </tr>
+                        </thead>
+                        <tbody data-alumni-table-body>
+                            <tr>
+                                <td colspan="7">Memuat data alumni...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="alumni-table-footer">
+                    <button type="button" class="alumni-page-button" data-alumni-prev disabled>
+                        Sebelumnya
+                    </button>
+
+                    <span class="alumni-page-indicator" data-alumni-page-indicator>
+                        Halaman 1 dari 1
+                    </span>
+
+                    <button type="button" class="alumni-page-button" data-alumni-next disabled>
+                        Berikutnya
+                    </button>
+                </div>
+            </div>
+
+        </section>
+
+
 
         <!-- ======================================
              TIM JEJAK PAGE
@@ -1181,6 +1261,7 @@
     🔊
 </button>
 
+<script src="alumni-data.js"></script>
 <script src="script.js"></script>
 
 </body>

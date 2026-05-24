@@ -1,4 +1,4 @@
-No,Nama Lengkap,Fakultas,Ormawa,Jabatan,Tahun Menjabat,LKMM-TM
+window.ALUMNI_CSV_TEXT = `No,Nama Lengkap,Fakultas,Ormawa,Jabatan,Tahun Menjabat,LKMM-TM
 1,Nadia Salmah Fitria,Fakultas Kedokteran dan Kesehatan,Himpunan Mahasiswa Teknologi Kedokteran,Ketua Umum,2025/2026,Cakrawala
 2,Muhammad Aiman Zhafran Wibawanto,Fakultas Sains dan Analitika Data,Himpunan Mahasiswa Sains Aktuaria,Ketua Umum,2025/2026,Cakrawala
 3,Fhadilah Amaliah,Fakultas Sains dan Analitika Data,Himpunan Mahasiswa Fisika,Ketua Umum,2025/2026,Cakrawala
@@ -153,3 +153,4 @@ No,Nama Lengkap,Fakultas,Ormawa,Jabatan,Tahun Menjabat,LKMM-TM
 152,Muhammad Ali Makki,Fakultas Vokasi,-,-,2026/2027,Sinergi
 153,Indie Alfarizi,Fakultas Vokasi,Himpunan Mahasiswa Teknik Mesin Industri,Ketua Umum,2026/2027,Sinergi
 154,Muhammad Azmilfadhil Syamsudin,Fakultas Vokasi,Lembaga Minat Bakat ITS,Ketua Umum,2026/2027,Sinergi
+`;

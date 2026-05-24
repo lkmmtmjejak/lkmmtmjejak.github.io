@@ -86,6 +86,316 @@ const pageSections = document.querySelectorAll(".page-section");
 
 
 // ==========================================
+// ALUMNI TABLE FROM CSV
+// ==========================================
+
+const alumniTableBody = document.querySelector("[data-alumni-table-body]");
+const alumniPrevButton = document.querySelector("[data-alumni-prev]");
+const alumniNextButton = document.querySelector("[data-alumni-next]");
+const alumniPageIndicator = document.querySelector("[data-alumni-page-indicator]");
+const alumniMeta = document.querySelector("[data-alumni-meta]");
+
+const alumniState = {
+    rows: [],
+    headers: [],
+    currentPage: 1,
+    rowsPerPage: 10
+};
+
+const embeddedAlumniCsvText = typeof window !== "undefined" ? window.ALUMNI_CSV_TEXT : "";
+
+function hasEmbeddedAlumniCsv() {
+
+    return typeof embeddedAlumniCsvText === "string" && embeddedAlumniCsvText.trim().length > 0;
+
+}
+
+function escapeHtml(value) {
+
+    return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+
+}
+
+function parseCsv(text) {
+
+    const rows = [];
+    let currentRow = [];
+    let currentValue = "";
+    let inQuotes = false;
+
+    for (let index = 0; index < text.length; index += 1) {
+
+        const character = text[index];
+        const nextCharacter = text[index + 1];
+
+        if (inQuotes) {
+
+            if (character === '"') {
+
+                if (nextCharacter === '"') {
+
+                    currentValue += '"';
+                    index += 1;
+
+                } else {
+
+                    inQuotes = false;
+
+                }
+
+            } else {
+
+                currentValue += character;
+
+            }
+
+            continue;
+
+        }
+
+        if (character === '"') {
+
+            inQuotes = true;
+            continue;
+
+        }
+
+        if (character === ",") {
+
+            currentRow.push(currentValue);
+            currentValue = "";
+            continue;
+
+        }
+
+        if (character === "\n") {
+
+            currentRow.push(currentValue);
+            rows.push(currentRow);
+            currentRow = [];
+            currentValue = "";
+            continue;
+
+        }
+
+        if (character === "\r") {
+
+            continue;
+
+        }
+
+        currentValue += character;
+
+    }
+
+    currentRow.push(currentValue);
+
+    if (currentRow.some(cell => cell.trim() !== "")) {
+
+        rows.push(currentRow);
+
+    }
+
+    return rows;
+
+}
+
+function renderAlumniTable() {
+
+    if (!alumniTableBody) {
+
+        return;
+
+    }
+
+    const totalRows = alumniState.rows.length;
+    const totalPages = Math.max(1, Math.ceil(totalRows / alumniState.rowsPerPage));
+    const currentPage = Math.min(alumniState.currentPage, totalPages);
+    const startIndex = (currentPage - 1) * alumniState.rowsPerPage;
+    const visibleRows = alumniState.rows.slice(startIndex, startIndex + alumniState.rowsPerPage);
+
+    alumniState.currentPage = currentPage;
+
+    if (!visibleRows.length) {
+
+        alumniTableBody.innerHTML = `
+            <tr>
+                <td colspan="7">Data alumni belum tersedia.</td>
+            </tr>
+        `;
+
+    } else {
+
+        alumniTableBody.innerHTML = visibleRows.map((row, rowIndex) => {
+
+            const [no, namaLengkap, fakultas, ormawa, jabatan, tahunMenjabat, lkmmTm] = row;
+
+            return `
+                <tr>
+                    <td>${escapeHtml(no || String(startIndex + rowIndex + 1))}</td>
+                    <td>${escapeHtml(namaLengkap || "-")}</td>
+                    <td>${escapeHtml(fakultas || "-")}</td>
+                    <td>${escapeHtml(ormawa || "-")}</td>
+                    <td>${escapeHtml(jabatan || "-")}</td>
+                    <td>${escapeHtml(tahunMenjabat || "-")}</td>
+                    <td>${escapeHtml(lkmmTm || "-")}</td>
+                </tr>
+            `;
+
+        }).join("");
+
+    }
+
+    if (alumniPageIndicator) {
+
+        alumniPageIndicator.textContent = `Halaman ${currentPage} dari ${totalPages}`;
+
+    }
+
+    if (alumniPrevButton) {
+
+        alumniPrevButton.disabled = currentPage <= 1;
+
+    }
+
+    if (alumniNextButton) {
+
+        alumniNextButton.disabled = currentPage >= totalPages;
+
+    }
+
+    if (alumniMeta) {
+
+        alumniMeta.textContent = `${totalRows} baris data`;
+
+    }
+
+}
+
+function wireAlumniPagination() {
+
+    if (alumniPrevButton) {
+
+        alumniPrevButton.addEventListener("click", () => {
+
+            alumniState.currentPage = Math.max(1, alumniState.currentPage - 1);
+            renderAlumniTable();
+
+        });
+
+    }
+
+    if (alumniNextButton) {
+
+        alumniNextButton.addEventListener("click", () => {
+
+            const totalPages = Math.max(1, Math.ceil(alumniState.rows.length / alumniState.rowsPerPage));
+            alumniState.currentPage = Math.min(totalPages, alumniState.currentPage + 1);
+            renderAlumniTable();
+
+        });
+
+    }
+
+}
+
+async function loadAlumniTable() {
+
+    if (!alumniTableBody) {
+
+        return;
+
+    }
+
+    try {
+
+        let csvText = "";
+
+        if (window.location.protocol === "file:" && hasEmbeddedAlumniCsv()) {
+
+            csvText = embeddedAlumniCsvText;
+
+        } else {
+
+            const response = await fetch("alumni.csv", { cache: "no-store" });
+
+            if (!response.ok) {
+
+                throw new Error(`Gagal memuat alumni.csv (${response.status})`);
+
+            }
+
+            csvText = await response.text();
+
+        }
+
+        if (!csvText && hasEmbeddedAlumniCsv()) {
+
+            csvText = embeddedAlumniCsvText;
+
+        }
+
+        const parsedRows = parseCsv(csvText);
+
+        if (!parsedRows.length) {
+
+            throw new Error("CSV alumni kosong");
+
+        }
+
+        alumniState.headers = parsedRows[0];
+        alumniState.rows = parsedRows.slice(1).filter(row => row.some(cell => cell.trim() !== ""));
+        alumniState.currentPage = 1;
+        renderAlumniTable();
+
+    } catch (error) {
+
+        console.error(error);
+
+        alumniTableBody.innerHTML = `
+            <tr>
+                <td colspan="7">Data alumni belum bisa dimuat dari alumni.csv.</td>
+            </tr>
+        `;
+
+        if (alumniMeta) {
+
+            alumniMeta.textContent = "Gagal memuat data";
+
+        }
+
+        if (alumniPageIndicator) {
+
+            alumniPageIndicator.textContent = "Halaman 0 dari 0";
+
+        }
+
+        if (alumniPrevButton) {
+
+            alumniPrevButton.disabled = true;
+
+        }
+
+        if (alumniNextButton) {
+
+            alumniNextButton.disabled = true;
+
+        }
+
+    }
+
+}
+
+wireAlumniPagination();
+loadAlumniTable();
+
+
+// ==========================================
 // NAVIGATION SYSTEM
 // ==========================================
 
@@ -549,9 +859,9 @@ if (backgroundMusic && musicToggle) {
             musicStarted = true;
 
         })
-        .catch(error => {
+        .catch(() => {
 
-            console.log("Autoplay blocked:", error);
+            return;
 
         });
 
