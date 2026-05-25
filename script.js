@@ -505,8 +505,9 @@ function renderAlumniChart() {
     .map((group, index) => {
         const color = getFacultyColor(group.faculty);
         const abbrev = escapeHtml(getFacultyAbbrev(group.faculty));
+        const fullName = escapeHtml(group.faculty);
 
-        return `<span class="alumni-inline-item" data-faculty="${escapeHtml(group.faculty)}"><span class="alumni-inline-dot" style="background:${color}"></span>${abbrev}</span>`;
+        return `<span class="alumni-inline-item" data-faculty="${escapeHtml(group.faculty)}" title="${fullName}"><span class="alumni-inline-dot" style="background:${color}"></span>${abbrev}</span>`;
 
     }).join(" ");
 
@@ -647,9 +648,9 @@ function renderAlumniLevelChart() {
     .filter(group => !selectedLevel || selectedLevel === group.level)
     .map((group, index) => {
         const color = getLevelColor(group.level);
-        const levelShort = String(group.level || "-").slice(0, 8);
+        const levelText = String(group.level || "-");
 
-        return `<span class="alumni-inline-item" data-level="${escapeHtml(group.level)}"><span class="alumni-inline-dot" style="background:${color}"></span>${escapeHtml(levelShort)}</span>`;
+        return `<span class="alumni-inline-item" data-level="${escapeHtml(group.level)}" title="${escapeHtml(levelText)}"><span class="alumni-inline-dot" style="background:${color}"></span>${escapeHtml(levelText)}</span>`;
 
     }).join(" ");
 
@@ -754,8 +755,9 @@ function renderAlumniOrgChart() {
     .map((group, index) => {
         const color = getOrgColor(group.org, index);
         const orgShort = escapeHtml(getOrgAbbrev(group.org));
+        const orgFull = escapeHtml(group.org);
 
-        return `<span class="alumni-inline-item" data-org="${escapeHtml(group.org)}"><span class="alumni-inline-dot" style="background:${color}"></span>${orgShort}</span>`;
+        return `<span class="alumni-inline-item" data-org="${escapeHtml(group.org)}" title="${orgFull}"><span class="alumni-inline-dot" style="background:${color}"></span>${orgShort}</span>`;
 
     }).join(" ");
 

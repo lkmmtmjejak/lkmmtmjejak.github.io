@@ -317,18 +317,24 @@ main > .content-box:last-of-type{
 }
 
 .alumni-hero h2{
-    font-size: clamp(1.4rem, 2vw, 2rem);
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--text);
+    font-size: 1.1rem;
+    font-weight: 500;
     margin-bottom: 14px;
 }
 
-.alumni-chart-placeholder{
+.alumni-chart-placeholder,
+[data-alumni-chart],
+[data-alumni-level-chart],
+[data-alumni-org-chart] {
     margin: 0;
     padding: 0;
     border: none;
     background: transparent;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 0;
     color: var(--muted);
     font-weight: 600;
     flex-grow: 1;
@@ -386,9 +392,9 @@ main > .content-box:last-of-type{
 .alumni-chart-header-row h3{
     margin-top: 3px;
     margin-bottom: 2px;
-    font-size: 0.88rem; /* slightly smaller so it fits one line */
-    font-family: inherit; /* use same font as legend */
-    color: var(--muted);
+    font-size: 0.95rem; /* adjusted to match user preference */
+    font-family: 'Fraunces', serif; /* use same font as heading */
+    color: var(--accent-dark);
     font-weight: 700;
     line-height: 1.05;
 }
@@ -420,9 +426,9 @@ main > .content-box:last-of-type{
 }
 
 .alumni-chart-view{
-    display: grid;
-    grid-template-columns: minmax(240px, 340px) minmax(0, 1fr);
-    gap: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
     align-items: center;
 }
 
@@ -509,7 +515,7 @@ main > .content-box:last-of-type{
     flex-direction: column;
     gap: 8px;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     flex-grow: 1;
 }
 
@@ -523,7 +529,12 @@ main > .content-box:last-of-type{
     gap: 12px;
     flex-wrap: wrap;
     justify-content: center;
-    margin-top: 8px;
+    align-items: center;
+    margin-top: 2px;
+    width: auto;
+    padding: 0;
+    overflow: visible;
+    box-sizing: border-box;
 }
 
 .alumni-inline-item{
@@ -635,12 +646,18 @@ main > .content-box:last-of-type{
 }
 
 @media (max-width: 920px){
-    .alumni-chart-view{
-        grid-template-columns: 1fr;
+    .alumni-chart-inline-legend{
+        font-size: 0.85rem;
+        gap: 10px;
     }
 
-    .alumni-chart-legend{
-        grid-template-columns: 1fr;
+    .alumni-inline-item{
+        gap: 6px;
+    }
+
+    .alumni-inline-dot{
+        width: 10px;
+        height: 10px;
     }
 }
 
@@ -720,21 +737,28 @@ main > .content-box:last-of-type{
     text-align: center;
 }
 
-.alumni-table-footer{
-    margin-top: 18px;
+.alumni-table-footer {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 14px;
-    flex-wrap: wrap;
+    justify-content: space-between; /* Membuat tombol kiri, teks di tengah, tombol kanan */
+    gap: 12px;
+    padding: 16px 8px; /* Sesuaikan padding container jika perlu */
 }
 
-.alumni-page-indicator{
+/* .alumni-page-indicator{
     color: var(--muted);
     font-weight: 600;
+} */
+
+.alumni-page-indicator {
+    font-size: 14px;
+    font-weight: 500;
+    color: #4a4a4a; /* Sesuaikan warna teks */
+    flex-grow: 1;
+    text-align: center;
 }
 
-.alumni-page-button{
+/* .alumni-page-button{
     min-width: 130px;
     padding: 12px 18px;
     border-radius: 999px;
@@ -744,18 +768,42 @@ main > .content-box:last-of-type{
     font-weight: 700;
     box-shadow: 0 10px 20px rgba(64, 43, 43, 0.08);
     transition: transform 0.22s ease, box-shadow 0.22s ease, background-color 0.22s ease, color 0.22s ease;
+} */
+
+.alumni-page-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    /* Mengunci ukuran tombol agar tidak gepeng/lonjong */
+    width: 36px;
+    height: 36px;
+    padding: 0; /* Reset padding bawaan agar tidak merusak lingkaran */
+    border-radius: 50%; /* Bikin bulat sempurna, atau ubah ke 8px kalau mau kotak rounded */
+    border: 1px solid #e0e0e0; /* Sesuaikan warna border dengan tema webmu */
+    background-color: #ffffff;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
-.alumni-page-button:hover:not(:disabled){
+/* .alumni-page-button:hover:not(:disabled){
     transform: translateY(-2px);
     box-shadow: 0 14px 24px rgba(64, 43, 43, 0.12);
+} */
+
+.alumni-page-button:not(:disabled):hover {
+    background-color: #f5f5f5;
 }
 
-.alumni-page-button:disabled{
+/* .alumni-page-button:disabled{
     cursor: not-allowed;
     color: rgba(107, 74, 74, 0.5);
     background: rgba(255, 255, 255, 0.72);
     box-shadow: none;
+} */
+
+.alumni-page-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 .content-box h1{
