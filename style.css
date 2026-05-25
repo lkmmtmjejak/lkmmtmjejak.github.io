@@ -331,6 +331,8 @@ main > .content-box:last-of-type{
     gap: 8px;
     color: var(--muted);
     font-weight: 600;
+    flex-grow: 1;
+    align-self: stretch;
 }
 
 /* Compact dashboard cards for alumni hero */
@@ -354,8 +356,10 @@ main > .content-box:last-of-type{
 }
 
 .dashboard-card--chart{
-    padding: 10px 14px;
-    align-items: flex-start;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
     justify-content: flex-start;
 }
 
@@ -500,11 +504,13 @@ main > .content-box:last-of-type{
     gap: 10px;
 }
 
-/* Legend under chart for compact dashboard */
 .dashboard-card .alumni-chart-view{
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 8px;
     align-items: center;
+    justify-content: space-between;
+    flex-grow: 1;
 }
 
 .alumni-chart-legend-item{
@@ -526,6 +532,14 @@ main > .content-box:last-of-type{
     gap: 8px;
     color: var(--muted);
     font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease, color 0.2s ease;
+    user-select: none;
+}
+
+.alumni-inline-item:hover{
+    color: var(--accent-dark);
+    transform: scale(1.05);
 }
 
 .alumni-inline-dot{
@@ -637,16 +651,12 @@ main > .content-box:last-of-type{
 .alumni-table-header{
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: center;
     gap: 18px;
     flex-wrap: wrap;
 }
 
 .alumni-table-header h2{
-    margin-bottom: 8px;
-}
-
-.alumni-table-header p{
     margin: 0;
 }
 

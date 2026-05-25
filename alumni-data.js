@@ -38,7 +38,7 @@ No,Nama Lengkap,Fakultas,Ormawa,Jabatan,Tahun Menjabat,LKMM-TM,Level,Organisasi
 36,Levy Andriyano,Fakultas Teknologi Elektro dan Informatika Cerdas,Himpunan Mahasiswa Teknik Biomedik,Ketua Umum,2025/2026,Cakrawala,Ketua dan Wakil Ketua,Eksekutif
 37,Talitha Firyal Ghina Nuha,Fakultas Teknologi Elektro dan Informatika Cerdas,Badan Eksekutif Mahasiswa ITS,Menteri Sosial Masyarakat,2025/2026,Cakrawala,Top Management,Eksekutif
 38,Muhammad Zalmaladzi El - Fajri,Fakultas Teknologi Industri dan Rekayasa Sistem,Lembaga Kajian Kerohanian Islam Teknik Mesin,Ketua Umum,2025/2026,Cakrawala,Ketua dan Wakil Ketua,Forum Keagamaan
-39,Aisya Dwiagung Putri,Fakultas Teknologi Industri dan Rekayasa Sistem,Event Professional Engineering Month,Ketua Umum,2025/2026,Cakrawala,Ketua dan Wakil Ketua,Big Event
+39,Aisya Dwiagung Putri,Fakultas Teknologi Industri dan Rekayasa Sistem,Himpunan Mahasiswa Teknik Kimia,Board of Director PEM,2025/2026,Cakrawala,Top Management,Big Event
 40,Aisya Dwiagung Putri,Fakultas Teknologi Industri dan Rekayasa Sistem,Badan Eksekutif Mahasiswa FTIRS,Sekretaris Departemen PSDM,2025/2027,Cakrawala,Middle Management,Eksekutif
 41,Naswa Syifa Azizah,Fakultas Teknologi Industri dan Rekayasa Sistem,Himpunan Mahasiswa Teknik Kimia,Kepala Departemen Finance,2025/2026,Cakrawala,Top Management,Eksekutif
 42,Naswa Syifa Azizah,Fakultas Teknologi Industri dan Rekayasa Sistem,Latihan Keterampilan Manajemen Mahasiswa Tingkat Menengah,Fasilitator Sinergi,2025/2026,Cakrawala,Kepemanduan,Kepemanduan
@@ -55,7 +55,7 @@ No,Nama Lengkap,Fakultas,Ormawa,Jabatan,Tahun Menjabat,LKMM-TM,Level,Organisasi
 53,Raga Yudha Rochzaitun Ardhana,Fakultas Teknologi Industri dan Rekayasa Sistem,Badan Eksekutif Mahasiswa ITS,Menteri Luar Negeri,2025/2026,Cakrawala,Top Management,Eksekutif
 54,Raga Yudha Rochzaitun Ardhana,Fakultas Teknologi Industri dan Rekayasa Sistem,Himpunanan Mahasiswa Teknik Mesin,Kepala Biro Kelembagaan,2025/2026,Cakrawala,Middle Management,Eksekutif
 55,Silvana Lidya Christanti Rafalina Deda,Fakultas Teknologi Industri dan Rekayasa Sistem,Badan Eksekutif Mahasiswa FTIRS,Kepala Biro Tingkat Dasar PSDM,2025/2026,Cakrawala,Middle Management,Eksekutif
-56,Erta Nuris Sya'ah,Fakultas Teknologi Industri dan Rekayasa Sistem,Himpunanan Mahasiswa Teknik Mesin,Ketua Umum Big Event,2025/2026,Cakrawala,Top Management,Eksekutif
+56,Erta Nuris Sya'ah,Fakultas Teknologi Industri dan Rekayasa Sistem,Himpunanan Mahasiswa Teknik Mesin,Ketua Umum Big Event,2025/2026,Cakrawala,Ketua dan Wakil Ketua,Big Event
 57,Muhammad Sholeh,Fakultas Teknologi Industri dan Rekayasa Sistem,Badan Eksekutif Mahasiswa FTIRS,Kepala Biro Tingkat Lanjut PSDM,2025/2026,Cakrawala,Middle Management,Eksekutif
 58,Helmy Hermawan,Fakultas Teknologi Industri dan Rekayasa Sistem,Badan Eksekutif Mahasiswa ITS,Wakil Menteri Dalam Negeri,2025/2026,Cakrawala,Top Management,Eksekutif
 59,Faisal Adli Munif,Fakultas Teknologi Industri dan Rekayasa Sistem,Badan Eksekutif Mahasiswa FTIRS,Ketua Umum,2025/2026,Cakrawala,Ketua dan Wakil Ketua,Eksekutif
@@ -79,7 +79,7 @@ No,Nama Lengkap,Fakultas,Ormawa,Jabatan,Tahun Menjabat,LKMM-TM,Level,Organisasi
 77,Mayscha Puspita Naylatika,"Fakultas Teknik Sipil, Perencanaan dan Kebumian",Badan Koordinasi Pemandu FTSPK,Ketua Umum,2025/2026,Cakrawala,Ketua dan Wakil Ketua,Kepemanduan
 78,Mayscha Puspita Naylatika,"Fakultas Teknik Sipil, Perencanaan dan Kebumian",Latihan Keterampilan Manajemen Mahasiswa Tingkat Menengah,Fasilitator Sinergi,2025/2026,Cakrawala,Kepemanduan,Kepemanduan
 79,Mayscha Puspita Naylatika,"Fakultas Teknik Sipil, Perencanaan dan Kebumian",Latihan Keterampilan Manajemen Mahasiswa Tingkat Menengah,Pemandu Jejak,2026/2027,Cakrawala,Kepemanduan,Kepemanduan
-80,Anil Mubarak Afadil,"Fakultas Teknik Sipil, Perencanaan dan Kebumian",Himpunan Mahasiswa Teknik Lingkungan,Ketua Umum Big Event,2025/2026,Cakrawala,Top Management,Eksekutif
+80,Anil Mubarak Afadil,"Fakultas Teknik Sipil, Perencanaan dan Kebumian",Himpunan Mahasiswa Teknik Lingkungan,Ketua Umum Environation,2025/2026,Cakrawala,Ketua dan Wakil Ketua,Big Event
 81,Zidni Alfian Barik,"Fakultas Teknik Sipil, Perencanaan dan Kebumian",Himpunan Mahasiswa Teknik Lingkungan,Kepala Departemen PSDM,2025/2026,Cakrawala,Top Management,Eksekutif
 82,Salsabila Anisa Inayah,"Fakultas Teknik Sipil, Perencanaan dan Kebumian",Badan Koordinasi Pemandu FTSPK,Kepala Departemen PSDA,2025/2026,Cakrawala,Top Management,Kepemanduan
 83,Salsabila Anisa Inayah,"Fakultas Teknik Sipil, Perencanaan dan Kebumian",Latihan Keterampilan Manajemen Mahasiswa Tingkat Menengah,Fasilitator Sinergi,2025/2026,Cakrawala,Kepemanduan,Kepemanduan
@@ -97,10 +97,10 @@ No,Nama Lengkap,Fakultas,Ormawa,Jabatan,Tahun Menjabat,LKMM-TM,Level,Organisasi
 95,Muhammad Irvan Athillah Sawerigading,Fakultas Vokasi,Badan Legislatif Mahasiswa,Ketua Umum,2025/2026,Cakrawala,Ketua dan Wakil Ketua,Legislatif
 96,Dwi Aldino Putra,Fakultas Vokasi,Himpunan Mahasiswa Teknik Mesin Industri,Ketua Umum,2025/2026,Cakrawala,Ketua dan Wakil Ketua,Eksekutif
 97,Ahmad Zidan Anfa'a,Fakultas Vokasi,Himpunan Mahasiswa Teknik Instrumentasi,Wakil Ketua Umum,2025/2026,Cakrawala,Ketua dan Wakil Ketua,Eksekutif
-98,Daniel Salim,Fakultas Design Kreatif dan Bisnis Digital,-,-,-,Sinergi,-,-
+98,Daniel Salim,Fakultas Design Kreatif dan Bisnis Digital,-,-,2026/2027,Sinergi,-,-
 99,Moh. Ridho Putra Pradana,Fakultas Design Kreatif dan Bisnis Digital,Latihan Keterampilan Manajemen Mahasiswa Tingkat Menengah,Fasilitator Jejak,2026/2027,Sinergi,Kepemanduan,Kepemanduan
 100,Muhammad Rasky Alfitra,Fakultas Design Kreatif dan Bisnis Digital,Himpunan Mahasiswa Design Interior,Wakil Ketua Umum,2026/2027,Sinergi,Ketua dan Wakil Ketua,Eksekutif
-101,Maulana Iqbal,Fakultas Design Kreatif dan Bisnis Digital,-,-,-,Sinergi,-,-
+101,Maulana Iqbal,Fakultas Design Kreatif dan Bisnis Digital,-,-,2026/2027,Sinergi,-,-
 102,Timothy Wirjantoro Harjanto,Fakultas Kedokteran dan Kesehatan,Himpunan Mahasiswa Teknologi Kedokteran,Ketua Umum,2026/2027,Sinergi,Ketua dan Wakil Ketua,Eksekutif
 103,Rahaditya Alfin Azza,Fakultas Kedokteran dan Kesehatan,Himpunan Mahasiswa Kedokteran,Ketua Umum,2026/2027,Sinergi,Ketua dan Wakil Ketua,Eksekutif
 104,Marcelinus Jonathan Salim,Fakultas Kedokteran dan Kesehatan,Himpunan Mahasiswa Teknologi Kedokteran,Wakil Ketua Umum,2026/2027,Sinergi,Ketua dan Wakil Ketua,Eksekutif

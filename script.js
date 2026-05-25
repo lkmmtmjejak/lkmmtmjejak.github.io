@@ -96,6 +96,7 @@ const alumniPageIndicator = document.querySelector("[data-alumni-page-indicator]
 const alumniMeta = document.querySelector("[data-alumni-meta]");
 const alumniChartMount = document.querySelector("[data-alumni-chart]");
 const alumniLevelChartMount = document.querySelector("[data-alumni-level-chart]");
+const alumniOrgChartMount = document.querySelector("[data-alumni-org-chart]");
 
 const alumniState = {
     rows: [],
@@ -103,7 +104,8 @@ const alumniState = {
     currentPage: 1,
     rowsPerPage: 10,
     selectedFaculty: "",
-    selectedLevel: ""
+    selectedLevel: "",
+    selectedOrg: ""
 };
 
 const alumniFacultyPalette = [
@@ -175,6 +177,28 @@ function getLevelColor(level) {
     return levelColorMap[levelStr] || "#C8B6A0";  // fallback beige
 }
 
+// Color map for organizations (pastel tones)
+const orgColorMap = {};  // Will be dynamically populated
+
+function getOrgColor(org, index) {
+    if (!orgColorMap[org]) {
+        const orgPalette = [
+            "#9CC7A1", "#D88A8A", "#8FB6D6", "#E6D29C", 
+            "#B7A0D6", "#E7B58C", "#70B9AA", "#F4B183",
+            "#C8B6A0", "#A89BD8", "#7FD8BE", "#D4A574"
+        ];
+        orgColorMap[org] = orgPalette[index % orgPalette.length];
+    }
+    return orgColorMap[org];
+}
+
+function getOrgAbbrev(org) {
+    const orgText = String(org || "").trim();
+    if (!orgText || orgText.length === 0 || orgText === "-") return "-";
+    
+    return orgText;
+}
+
 const embeddedAlumniCsvText = typeof window !== "undefined" ? window.ALUMNI_CSV_TEXT : "";
 
 function hasEmbeddedAlumniCsv() {
@@ -223,15 +247,21 @@ function inferAlumniLevel(ormawa, jabatan) {
 
     }
 
-    return "-";
+    return "Tidak Diketahui";
 
 }
 
 function normalizeAlumniRow(row) {
 
-    if (row.length >= 8) {
+    if (row.length >= 9) {
 
-        return row.slice(0, 8);
+        return row.slice(0, 9);
+
+    }
+
+    if (row.length === 8) {
+
+        return [...row, "Tidak Diketahui"];
 
     }
 
@@ -239,7 +269,7 @@ function normalizeAlumniRow(row) {
 
         const [no, namaLengkap, fakultas, ormawa, jabatan, tahunMenjabat, lkmmTm] = row;
 
-        return [no, namaLengkap, fakultas, ormawa, jabatan, tahunMenjabat, lkmmTm, inferAlumniLevel(ormawa, jabatan)];
+        return [no, namaLengkap, fakultas, ormawa, jabatan, tahunMenjabat, lkmmTm, inferAlumniLevel(ormawa, jabatan), "Tidak Diketahui"];
 
     }
 
@@ -263,7 +293,25 @@ function getAlumniFaculty(row) {
 
 function getAlumniLevel(row) {
 
-    return String(row[7] || "-").trim() || "-";
+    const lvl = String(row[7] || "").trim();
+    if (!lvl || lvl === "-") {
+        return "Tidak Diketahui";
+    }
+    return lvl;
+
+}
+
+function getAlumniOrg(row) {
+
+    const org = String(row[8] || "").replace(/\s+/g, " ").trim();
+
+    if (!org || org === "-") {
+
+        return "Organisasi Tidak Diketahui";
+
+    }
+
+    return org;
 
 }
 
@@ -274,6 +322,9 @@ function getFilteredAlumniRows() {
             return false;
         }
         if (alumniState.selectedLevel && getAlumniLevel(row) !== alumniState.selectedLevel) {
+            return false;
+        }
+        if (alumniState.selectedOrg && getAlumniOrg(row) !== alumniState.selectedOrg) {
             return false;
         }
         return true;
@@ -315,6 +366,23 @@ function getAlumniLevelGroups() {
 
 }
 
+function getAlumniOrgGroups() {
+
+    const groups = new Map();
+
+    alumniState.rows.forEach(row => {
+
+        const org = getAlumniOrg(row);
+        groups.set(org, (groups.get(org) || 0) + 1);
+
+    });
+
+    return Array.from(groups.entries())
+    .map(([org, count]) => ({ org, count }))
+    .sort((left, right) => right.count - left.count || left.org.localeCompare(right.org));
+
+}
+
 function polarToCartesian(centerX, centerY, radius, angle) {
 
     const radians = (angle - 90) * Math.PI / 180;
@@ -353,6 +421,7 @@ function setAlumniFacultyFilter(faculty) {
     alumniState.currentPage = 1;
     renderAlumniChart();
     renderAlumniLevelChart();
+    renderAlumniOrgChart();
     renderAlumniTable();
 
 }
@@ -363,6 +432,7 @@ function setAlumniLevelFilter(level) {
     alumniState.currentPage = 1;
     renderAlumniChart();
     renderAlumniLevelChart();
+    renderAlumniOrgChart();
     renderAlumniTable();
 
 }
@@ -429,12 +499,14 @@ function renderAlumniChart() {
     const centerValue = selectedFaculty && activeGroup ? String(activeGroup.count) : String(total);
     const centerLabel = ""; // no label inside chart per request
 
-    // build a very compact inline legend: dot + ABBR (non-interactive)
-    const legendInline = groups.map((group, index) => {
+    // build a very compact inline legend: dot + ABBR (interactive & filterable)
+    const legendInline = groups
+    .filter(group => !selectedFaculty || selectedFaculty === group.faculty)
+    .map((group, index) => {
         const color = getFacultyColor(group.faculty);
         const abbrev = escapeHtml(getFacultyAbbrev(group.faculty));
 
-        return `<span class="alumni-inline-item"><span class="alumni-inline-dot" style="background:${color}"></span>${abbrev}</span>`;
+        return `<span class="alumni-inline-item" data-faculty="${escapeHtml(group.faculty)}"><span class="alumni-inline-dot" style="background:${color}"></span>${abbrev}</span>`;
 
     }).join(" ");
 
@@ -571,11 +643,13 @@ function renderAlumniLevelChart() {
     const activeGroup = selectedLevel ? groups.find(group => group.level === selectedLevel) : null;
     const centerValue = selectedLevel && activeGroup ? String(activeGroup.count) : String(total);
 
-    const legendInline = groups.map((group, index) => {
+    const legendInline = groups
+    .filter(group => !selectedLevel || selectedLevel === group.level)
+    .map((group, index) => {
         const color = getLevelColor(group.level);
         const levelShort = String(group.level || "-").slice(0, 8);
 
-        return `<span class="alumni-inline-item"><span class="alumni-inline-dot" style="background:${color}"></span>${escapeHtml(levelShort)}</span>`;
+        return `<span class="alumni-inline-item" data-level="${escapeHtml(group.level)}"><span class="alumni-inline-dot" style="background:${color}"></span>${escapeHtml(levelShort)}</span>`;
 
     }).join(" ");
 
@@ -583,7 +657,6 @@ function renderAlumniLevelChart() {
         <div class="alumni-chart-header-row">
             <div>
                 <h3>Sebaran Level</h3>
-                <p style="font-size:0.75rem; color:var(--muted); margin:2px 0 0 0;">Menampilkan sebaran level</p>
             </div>
         </div>
 
@@ -602,6 +675,136 @@ function renderAlumniLevelChart() {
             </div>
         </div>
     `;
+
+}
+
+function setAlumniOrgFilter(org) {
+
+    alumniState.selectedOrg = alumniState.selectedOrg === org ? "" : org;
+    alumniState.currentPage = 1;
+    renderAlumniChart();
+    renderAlumniLevelChart();
+    renderAlumniOrgChart();
+    renderAlumniTable();
+
+}
+
+function renderAlumniOrgChart() {
+
+    if (!alumniOrgChartMount) {
+
+        return;
+
+    }
+
+    const groups = getAlumniOrgGroups();
+
+    if (!groups.length) {
+
+        alumniOrgChartMount.innerHTML = `
+            <div class="alumni-chart-empty">
+                Data belum tersedia untuk divisualisasikan.
+            </div>
+        `;
+
+        return;
+
+    }
+
+    const total = groups.reduce((sum, group) => sum + group.count, 0);
+    const size = 160;
+    const center = size / 2;
+    const radius = 60;
+    const selectedOrg = alumniState.selectedOrg;
+
+    let currentAngle = 0;
+
+    const slices = groups.map((group, index) => {
+
+        const sliceAngle = (group.count / total) * 360;
+        const startAngle = currentAngle;
+        const endAngle = currentAngle + sliceAngle;
+        currentAngle = endAngle;
+
+        const color = getOrgColor(group.org, index);
+        const isActive = !selectedOrg || selectedOrg === group.org;
+        const opacity = selectedOrg && !isActive ? 0.26 : 1;
+
+        return `
+            <path
+                class="alumni-chart-slice${isActive ? " is-active" : ""}"
+                data-org="${escapeHtml(group.org)}"
+                d="${createPieSlicePath(center, center, radius, startAngle, endAngle)}"
+                fill="${color}"
+                fill-opacity="${opacity}"
+                stroke="rgba(255, 251, 247, 0.96)"
+                stroke-width="2"
+            >
+                <title>${escapeHtml(group.org)}: ${group.count} alumni</title>
+            </path>
+        `;
+
+    }).join("");
+
+    const activeGroup = selectedOrg ? groups.find(group => group.org === selectedOrg) : null;
+    const centerValue = selectedOrg && activeGroup ? String(activeGroup.count) : String(total);
+
+    const legendInline = groups
+    .filter(group => !selectedOrg || selectedOrg === group.org)
+    .map((group, index) => {
+        const color = getOrgColor(group.org, index);
+        const orgShort = escapeHtml(getOrgAbbrev(group.org));
+
+        return `<span class="alumni-inline-item" data-org="${escapeHtml(group.org)}"><span class="alumni-inline-dot" style="background:${color}"></span>${orgShort}</span>`;
+
+    }).join(" ");
+
+    alumniOrgChartMount.innerHTML = `
+        <div class="alumni-chart-header-row">
+            <div>
+                <h3>Sebaran Organisasi</h3>
+            </div>
+        </div>
+
+        <div class="alumni-chart-view">
+            <div class="alumni-chart-svg-wrap">
+                <svg class="alumni-chart-svg" viewBox="0 0 ${size} ${size}" role="img" aria-label="Pie chart alumni per organisasi">
+                    <circle cx="${center}" cy="${center}" r="${radius + 1}" fill="rgba(255, 251, 247, 0.78)"></circle>
+                    ${slices}
+                    <circle cx="${center}" cy="${center}" r="${Math.max(40, Math.floor(radius * 0.6))}" fill="rgba(255, 251, 247, 0.96)" stroke="rgba(122, 78, 78, 0.10)" stroke-width="1.5"></circle>
+                    <text x="${center}" y="${center + 6}" class="alumni-chart-center-value">${centerValue}</text>
+                </svg>
+            </div>
+
+            <div class="alumni-chart-inline-legend" aria-hidden="true">
+                ${legendInline}
+            </div>
+        </div>
+    `;
+
+}
+
+if (alumniOrgChartMount) {
+
+    alumniOrgChartMount.addEventListener("click", event => {
+
+        const orgTarget = event.target.closest("[data-org]");
+        const clearTarget = event.target.closest("[data-action='clear-org']");
+
+        if (clearTarget) {
+
+            setAlumniOrgFilter("");
+            return;
+
+        }
+
+        if (orgTarget) {
+
+            setAlumniOrgFilter(orgTarget.getAttribute("data-org") || "");
+
+        }
+
+    });
 
 }
 
@@ -716,6 +919,14 @@ function renderAlumniTable() {
 
     } else {
 
+        const formatTableCell = (val) => {
+            const clean = String(val || "").trim();
+            if (!clean || clean === "-") {
+                return "Tidak Diketahui";
+            }
+            return clean;
+        };
+
         alumniTableBody.innerHTML = visibleRows.map((row, rowIndex) => {
 
             const [no, namaLengkap, , ormawa, jabatan, tahunMenjabat, lkmmTm, level] = normalizeAlumniRow(row);
@@ -723,13 +934,13 @@ function renderAlumniTable() {
             return `
                 <tr>
                     <td>${escapeHtml(no || String(startIndex + rowIndex + 1))}</td>
-                    <td>${escapeHtml(namaLengkap || "-")}</td>
-                    <td>${escapeHtml(getAlumniFaculty(row) || "-")}</td>
-                    <td>${escapeHtml(ormawa || "-")}</td>
-                    <td>${escapeHtml(jabatan || "-")}</td>
-                    <td>${escapeHtml(tahunMenjabat || "-")}</td>
-                    <td>${escapeHtml(lkmmTm || "-")}</td>
-                    <td>${escapeHtml(level || "-")}</td>
+                    <td>${escapeHtml(formatTableCell(namaLengkap))}</td>
+                    <td>${escapeHtml(getAlumniFaculty(row))}</td>
+                    <td>${escapeHtml(formatTableCell(ormawa))}</td>
+                    <td>${escapeHtml(formatTableCell(jabatan))}</td>
+                    <td>${escapeHtml(formatTableCell(tahunMenjabat))}</td>
+                    <td>${escapeHtml(formatTableCell(lkmmTm))}</td>
+                    <td>${escapeHtml(formatTableCell(level))}</td>
                 </tr>
             `;
 
@@ -849,6 +1060,7 @@ async function loadAlumniTable() {
         alumniState.currentPage = 1;
         renderAlumniChart();
         renderAlumniLevelChart();
+        renderAlumniOrgChart();
         renderAlumniTable();
 
     } catch (error) {
