@@ -307,7 +307,7 @@ function getAlumniOrg(row) {
 
     if (!org || org === "-") {
 
-        return "Organisasi Tidak Diketahui";
+        return "Tidak Diketahui";
 
     }
 
