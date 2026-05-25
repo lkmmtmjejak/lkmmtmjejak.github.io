@@ -322,19 +322,312 @@ main > .content-box:last-of-type{
 }
 
 .alumni-chart-placeholder{
-    margin-top: 22px;
-    min-height: 240px;
-    border-radius: 24px;
-    border: 1px dashed rgba(122, 78, 78, 0.20);
-    background:
-        radial-gradient(circle at top left, rgba(176, 109, 109, 0.12), transparent 40%),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(248, 241, 234, 0.92));
-    display: grid;
-    place-items: center;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
     color: var(--muted);
     font-weight: 600;
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
+}
+
+/* Compact dashboard cards for alumni hero */
+.alumni-hero-grid{
+    margin-top: 22px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.dashboard-card{
+    padding: 12px;
+    border-radius: 16px;
+    background: rgba(255,255,255,0.86);
+    border: 1px solid rgba(122,78,78,0.08);
+    box-shadow: 0 8px 20px rgba(64,43,43,0.06);
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dashboard-card--chart{
+    padding: 10px 14px;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.dashboard-card--empty .empty-card{
+    width: 100%;
+    height: 76px;
+    border-radius: 10px;
+    background: linear-gradient(180deg, rgba(248,241,234,0.6), rgba(255,255,255,0.6));
+    border: 1px dashed rgba(122,78,78,0.06);
+}
+
+.alumni-chart-header-row{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    flex-wrap: wrap;
+    background: linear-gradient(180deg, rgba(248,241,234,0.9), rgba(248,241,234,0.7));
+    padding: 12px 14px;
+    margin: -12px -14px 0 -14px;
+    border-radius: 16px 16px 0 0;
+}
+
+.alumni-chart-header-row h3{
+    margin-top: 3px;
+    margin-bottom: 2px;
+    font-size: 0.88rem; /* slightly smaller so it fits one line */
+    font-family: inherit; /* use same font as legend */
+    color: var(--muted);
+    font-weight: 700;
+    line-height: 1.05;
+}
+
+/* compact presentation: remove note and adjust header */
+.alumni-chart-header-row .alumni-chart-note{display:none}
+
+.alumni-chart-reset{
+    min-width: 138px;
+    padding: 11px 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(122, 78, 78, 0.14);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(248, 241, 234, 0.92));
+    color: var(--accent-dark);
+    font-weight: 700;
+    box-shadow: 0 10px 20px rgba(64, 43, 43, 0.08);
+    transition: transform 0.22s ease, box-shadow 0.22s ease, opacity 0.22s ease;
+}
+
+.alumni-chart-reset:hover:not(:disabled){
+    transform: translateY(-2px);
+    box-shadow: 0 14px 24px rgba(64, 43, 43, 0.12);
+}
+
+.alumni-chart-reset:disabled{
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.alumni-chart-view{
+    display: grid;
+    grid-template-columns: minmax(240px, 340px) minmax(0, 1fr);
+    gap: 24px;
+    align-items: center;
+}
+
+.alumni-chart-svg-wrap{
+    display: grid;
+    justify-items: center;
+    gap: 10px;
+}
+
+.alumni-chart-svg{
+    width: min(100%, 340px);
+    height: auto;
+    overflow: visible;
+}
+
+/* When chart is inside the compact dashboard card, render smaller */
+.dashboard-card .alumni-chart-svg{
+    width: 160px;
+}
+
+/* tighten spacing between header and chart inside card */
+.dashboard-card .alumni-chart-view{
+    margin-top: 2px;
+}
+
+/* slightly smaller gap inside svg wrap when compact */
+.dashboard-card .alumni-chart-svg-wrap{
+    gap: 6px;
+}
+
+/* Smaller center value inside compact dashboard card */
+.dashboard-card .alumni-chart-center-value{
+    font-size: 1.6rem; /* make center number more prominent */
+}
+
+@media (max-width: 920px){
+    .alumni-hero-grid{
+        grid-template-columns: 1fr;
+    }
+    .dashboard-card{min-height: 180px}
+}
+
+    /* Center header inside compact chart card */
+    .dashboard-card .alumni-chart-header-row{
+        justify-content: center;
+        text-align: center;
+    }
+
+.alumni-chart-center-value,
+.alumni-chart-center-label{
+    text-anchor: middle;
+}
+
+.alumni-chart-center-value{
+    fill: var(--accent-dark);
+    font-family: 'Fraunces', serif;
+    font-size: 2.15rem;
+    font-weight: 700;
+}
+
+.alumni-chart-center-label{
+    fill: var(--muted);
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.alumni-chart-total{
+    color: var(--muted);
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.alumni-chart-total strong{
+    color: var(--accent-dark);
+}
+
+.alumni-chart-legend{
+    display: grid;
+    gap: 10px;
+}
+
+/* Legend under chart for compact dashboard */
+.dashboard-card .alumni-chart-view{
+    grid-template-columns: 1fr;
+    gap: 8px;
+    align-items: center;
+}
+
+.alumni-chart-legend-item{
+    cursor: default;
+}
+
+/* Inline simple legend under chart */
+.alumni-chart-inline-legend{
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 8px;
+}
+
+.alumni-inline-item{
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--muted);
+    font-weight: 700;
+}
+
+.alumni-inline-dot{
+    width: 12px;
+    height: 12px;
+    border-radius: 999px;
+    display: inline-block;
+    box-shadow: inset 0 0 0 2px rgba(255,255,255,0.8);
+}
+
+.alumni-chart-legend-item{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 16px;
+    border: 1px solid rgba(122, 78, 78, 0.12);
+    background: rgba(255, 255, 255, 0.78);
+    text-align: left;
+    color: var(--text);
+    transition: transform 0.22s ease, background-color 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+}
+
+.alumni-chart-legend-item:hover{
+    transform: translateY(-1px);
+    box-shadow: 0 12px 24px rgba(64, 43, 43, 0.08);
+}
+
+.alumni-chart-legend-item.is-active{
+    background: var(--accent-soft);
+    border-color: rgba(176, 109, 109, 0.22);
+}
+
+.alumni-chart-legend-label{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+
+.alumni-chart-legend-label strong{
+    display: block;
+    color: var(--accent-dark);
+    font-size: 0.95rem;
+}
+
+.alumni-chart-legend-label small{
+    display: block;
+    margin-top: 2px;
+    color: var(--muted);
+    font-size: 0.84rem;
+}
+
+.alumni-chart-legend-dot{
+    width: 14px;
+    height: 14px;
+    flex: 0 0 14px;
+    border-radius: 999px;
+    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.82);
+}
+
+.alumni-chart-legend-count{
+    flex: 0 0 auto;
+    min-width: 38px;
+    text-align: right;
+    color: var(--accent-dark);
+    font-weight: 700;
+}
+
+.alumni-chart-slice{
+    cursor: pointer;
+    transition: opacity 0.2s ease, filter 0.2s ease, transform 0.2s ease;
+    transform-origin: center;
+}
+
+.alumni-chart-slice:hover,
+.alumni-chart-slice.is-active{
+    filter: drop-shadow(0 8px 14px rgba(64, 43, 43, 0.14));
+}
+
+.alumni-chart-empty{
+    display: grid;
+    place-items: center;
+    min-height: 240px;
+    border-radius: 20px;
+    border: 1px dashed rgba(122, 78, 78, 0.18);
+    background: rgba(255, 255, 255, 0.65);
+    color: var(--muted);
+    font-weight: 600;
+    text-align: center;
+}
+
+@media (max-width: 920px){
+    .alumni-chart-view{
+        grid-template-columns: 1fr;
+    }
+
+    .alumni-chart-legend{
+        grid-template-columns: 1fr;
+    }
 }
 
 .alumni-table-box{
