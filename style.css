@@ -304,8 +304,14 @@ main > .content-box:last-of-type{
 }
 
 .content-box h1,
-.content-box h2,
 .content-box h3{
+    font-family: 'Fraunces', serif;
+    color: var(--accent-dark);
+    line-height: 1.15;
+}
+
+/* Explicitly style all h2 in content-box (unless overridden) */
+.content-box h2{
     font-family: 'Fraunces', serif;
     color: var(--accent-dark);
     line-height: 1.15;
@@ -316,11 +322,12 @@ main > .content-box:last-of-type{
     margin-bottom: 8px;
 }
 
+/* Override the default content-box h2 style for this specific subtitle */
 .alumni-hero h2{
-    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-    color: var(--text);
-    font-size: 1.1rem;
-    font-weight: 500;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif !important;
+    color: var(--text) !important;
+    font-size: 1.15rem !important;
+    font-weight: 500 !important;
     margin-bottom: 14px;
 }
 

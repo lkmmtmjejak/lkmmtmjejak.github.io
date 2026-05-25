@@ -915,7 +915,7 @@ function renderAlumniTable() {
 
         alumniTableBody.innerHTML = `
             <tr>
-                <td colspan="8">Data alumni belum tersedia.</td>
+                <td colspan="7">Data alumni belum tersedia.</td>
             </tr>
         `;
 
@@ -931,7 +931,7 @@ function renderAlumniTable() {
 
         alumniTableBody.innerHTML = visibleRows.map((row, rowIndex) => {
 
-            const [no, namaLengkap, , ormawa, jabatan, tahunMenjabat, lkmmTm, level] = normalizeAlumniRow(row);
+            const [no, namaLengkap, , ormawa, jabatan, tahunMenjabat, lkmmTm] = normalizeAlumniRow(row);
 
             return `
                 <tr>
@@ -942,7 +942,6 @@ function renderAlumniTable() {
                     <td>${escapeHtml(formatTableCell(jabatan))}</td>
                     <td>${escapeHtml(formatTableCell(tahunMenjabat))}</td>
                     <td>${escapeHtml(formatTableCell(lkmmTm))}</td>
-                    <td>${escapeHtml(formatTableCell(level))}</td>
                 </tr>
             `;
 
