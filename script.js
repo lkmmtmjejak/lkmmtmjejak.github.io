@@ -97,6 +97,7 @@ const alumniMeta = document.querySelector("[data-alumni-meta]");
 const alumniChartMount = document.querySelector("[data-alumni-chart]");
 const alumniLevelChartMount = document.querySelector("[data-alumni-level-chart]");
 const alumniOrgChartMount = document.querySelector("[data-alumni-org-chart]");
+const alumniOrmawaChartMount = document.querySelector("[data-alumni-ormawa-chart]");
 
 const alumniState = {
     rows: [],
@@ -105,7 +106,8 @@ const alumniState = {
     rowsPerPage: 10,
     selectedFaculty: "",
     selectedLevel: "",
-    selectedOrg: ""
+    selectedOrg: "",
+    selectedOrmawa: ""
 };
 
 const alumniFacultyPalette = [
@@ -315,6 +317,20 @@ function getAlumniOrg(row) {
 
 }
 
+function getAlumniOrmawa(row) {
+
+    const ormawa = String(row[3] || "").replace(/\s+/g, " ").trim();
+
+    if (!ormawa || ormawa === "-") {
+
+        return "Tidak Diketahui";
+
+    }
+
+    return ormawa;
+
+}
+
 function getFilteredAlumniRows() {
 
     return alumniState.rows.filter(row => {
@@ -327,6 +343,9 @@ function getFilteredAlumniRows() {
         if (alumniState.selectedOrg && getAlumniOrg(row) !== alumniState.selectedOrg) {
             return false;
         }
+        if (alumniState.selectedOrmawa && getAlumniOrmawa(row) !== alumniState.selectedOrmawa) {
+            return false;
+        }
         return true;
     });
 
@@ -336,7 +355,7 @@ function getAlumniFacultyGroups() {
 
     const groups = new Map();
 
-    alumniState.rows.forEach(row => {
+    getFilteredAlumniRows().forEach(row => {
 
         const faculty = getAlumniFaculty(row);
         groups.set(faculty, (groups.get(faculty) || 0) + 1);
@@ -353,7 +372,7 @@ function getAlumniLevelGroups() {
 
     const groups = new Map();
 
-    alumniState.rows.forEach(row => {
+    getFilteredAlumniRows().forEach(row => {
 
         const level = getAlumniLevel(row);
         groups.set(level, (groups.get(level) || 0) + 1);
@@ -370,7 +389,7 @@ function getAlumniOrgGroups() {
 
     const groups = new Map();
 
-    alumniState.rows.forEach(row => {
+    getFilteredAlumniRows().forEach(row => {
 
         const org = getAlumniOrg(row);
         groups.set(org, (groups.get(org) || 0) + 1);
@@ -380,6 +399,23 @@ function getAlumniOrgGroups() {
     return Array.from(groups.entries())
     .map(([org, count]) => ({ org, count }))
     .sort((left, right) => right.count - left.count || left.org.localeCompare(right.org));
+
+}
+
+function getAlumniOrmawaGroups() {
+
+    const groups = new Map();
+
+    getFilteredAlumniRows().forEach(row => {
+
+        const ormawa = getAlumniOrmawa(row);
+        groups.set(ormawa, (groups.get(ormawa) || 0) + 1);
+
+    });
+
+    return Array.from(groups.entries())
+    .map(([ormawa, count]) => ({ ormawa, count }))
+    .sort((left, right) => right.count - left.count || left.ormawa.localeCompare(right.ormawa));
 
 }
 
@@ -396,9 +432,26 @@ function polarToCartesian(centerX, centerY, radius, angle) {
 
 function createPieSlicePath(centerX, centerY, radius, startAngle, endAngle) {
 
+    const sliceAngle = endAngle - startAngle;
+    
+    // Handle edge case: if slice is 360 or very close to it (for single item pie)
+    if (sliceAngle >= 359.9) {
+        // Draw two semicircles to create full circle
+        const topPoint = polarToCartesian(centerX, centerY, radius, startAngle);
+        const bottomPoint = polarToCartesian(centerX, centerY, radius, startAngle + 180);
+        
+        return [
+            `M ${centerX} ${centerY}`,
+            `L ${topPoint.x} ${topPoint.y}`,
+            `A ${radius} ${radius} 0 0 1 ${bottomPoint.x} ${bottomPoint.y}`,
+            `A ${radius} ${radius} 0 0 1 ${topPoint.x} ${topPoint.y}`,
+            "Z"
+        ].join(" ");
+    }
+
     const startPoint = polarToCartesian(centerX, centerY, radius, startAngle);
     const endPoint = polarToCartesian(centerX, centerY, radius, endAngle);
-    const largeArcFlag = endAngle - startAngle > 180 ? 1 : 0;
+    const largeArcFlag = sliceAngle > 180 ? 1 : 0;
 
     return [
         `M ${centerX} ${centerY}`,
@@ -807,6 +860,86 @@ if (alumniOrgChartMount) {
         }
 
     });
+
+}
+
+function renderAlumniOrmawaChart() {
+
+    if (!alumniOrmawaChartMount) {
+
+        return;
+
+    }
+
+    const groups = getAlumniOrmawaGroups();
+
+    if (!groups.length) {
+
+        alumniOrmawaChartMount.innerHTML = `
+            <div class="alumni-barchart-placeholder">
+                Data belum tersedia untuk divisualisasikan.
+            </div>
+        `;
+
+        return;
+
+    }
+
+    const maxCount = Math.max(...groups.map(g => g.count));
+    const chartHeight = 220;
+    const minBarHeight = 20;
+
+    const bars = groups.map((group, index) => {
+
+        const barHeight = Math.max(minBarHeight, (group.count / maxCount) * chartHeight);
+        const color = getFacultyColor(group.ormawa);
+        const truncatedLabel = group.ormawa.length > 12 ? group.ormawa.substring(0, 12) + "..." : group.ormawa;
+
+        return `
+            <div class="alumni-bar" data-ormawa="${escapeHtml(group.ormawa)}" title="${escapeHtml(group.ormawa)}">
+                <div class="alumni-bar-column" style="height: ${barHeight}px;"></div>
+                <div class="alumni-bar-value">${group.count}</div>
+                <div class="alumni-bar-label">${escapeHtml(truncatedLabel)}</div>
+            </div>
+        `;
+
+    }).join("");
+
+    alumniOrmawaChartMount.innerHTML = `
+        <div style="display: flex; gap: 12px; align-items: flex-end; padding-bottom: 8px;">
+            ${bars}
+        </div>
+    `;
+
+}
+
+if (alumniOrmawaChartMount) {
+
+    alumniOrmawaChartMount.addEventListener("click", event => {
+
+        const ormawaTarget = event.target.closest("[data-ormawa]");
+
+        if (ormawaTarget) {
+
+            const ormawa = ormawaTarget.getAttribute("data-ormawa") || "";
+            setAlumniOrmawaFilter(ormawa);
+
+        }
+
+    });
+
+}
+
+function setAlumniOrmawaFilter(ormawa) {
+
+    // Store selected ormawa in state (add to state object if needed)
+    alumniState.selectedOrmawa = alumniState.selectedOrmawa === ormawa ? "" : ormawa;
+    alumniState.currentPage = 1;
+    renderAlumniChart();
+    renderAlumniLevelChart();
+    renderAlumniOrgChart();
+    renderAlumniOrmawaChart();
+    renderAlumniTable();
 
 }
 
