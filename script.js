@@ -475,6 +475,7 @@ function setAlumniFacultyFilter(faculty) {
     renderAlumniChart();
     renderAlumniLevelChart();
     renderAlumniOrgChart();
+    renderAlumniOrmawaChart();
     renderAlumniTable();
 
 }
@@ -486,6 +487,7 @@ function setAlumniLevelFilter(level) {
     renderAlumniChart();
     renderAlumniLevelChart();
     renderAlumniOrgChart();
+    renderAlumniOrmawaChart();
     renderAlumniTable();
 
 }
@@ -739,6 +741,7 @@ function setAlumniOrgFilter(org) {
     renderAlumniChart();
     renderAlumniLevelChart();
     renderAlumniOrgChart();
+    renderAlumniOrmawaChart();
     renderAlumniTable();
 
 }
@@ -889,6 +892,9 @@ function renderAlumniOrmawaChart() {
     const chartHeight = 220;
     const minBarHeight = 20;
 
+    // containerHeight reserves space for the chart area plus label/value.
+    const containerHeight = chartHeight + 64;
+
     const bars = groups.map((group, index) => {
 
         const barHeight = Math.max(minBarHeight, (group.count / maxCount) * chartHeight);
@@ -896,9 +902,11 @@ function renderAlumniOrmawaChart() {
         const truncatedLabel = group.ormawa.length > 12 ? group.ormawa.substring(0, 12) + "..." : group.ormawa;
 
         return `
-            <div class="alumni-bar" data-ormawa="${escapeHtml(group.ormawa)}" title="${escapeHtml(group.ormawa)}">
-                <div class="alumni-bar-column" style="height: ${barHeight}px;"></div>
-                <div class="alumni-bar-value">${group.count}</div>
+            <div class="alumni-bar" data-ormawa="${escapeHtml(group.ormawa)}" title="${escapeHtml(group.ormawa)}" style="height: ${containerHeight}px;">
+                <div class="alumni-bar-inner" style="height: ${chartHeight}px; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; gap:6px; box-sizing:border-box; width:100%;">
+                    <div class="alumni-bar-value">${group.count}</div>
+                    <div class="alumni-bar-column" style="height: ${barHeight}px; background: ${color};"></div>
+                </div>
                 <div class="alumni-bar-label">${escapeHtml(truncatedLabel)}</div>
             </div>
         `;
@@ -1195,6 +1203,7 @@ async function loadAlumniTable() {
         renderAlumniChart();
         renderAlumniLevelChart();
         renderAlumniOrgChart();
+        renderAlumniOrmawaChart();
         renderAlumniTable();
 
     } catch (error) {
