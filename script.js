@@ -255,15 +255,21 @@ function inferAlumniLevel(ormawa, jabatan) {
 
 function normalizeAlumniRow(row) {
 
-    if (row.length >= 9) {
+    if (row.length >= 10) {
 
-        return row.slice(0, 9);
+        return row.slice(0, 10);
+
+    }
+
+    if (row.length === 9) {
+
+        return [...row, "Unknown"];
 
     }
 
     if (row.length === 8) {
 
-        return [...row, "Tidak Diketahui"];
+        return [...row, "Tidak Diketahui", "Unknown"];
 
     }
 
@@ -271,7 +277,7 @@ function normalizeAlumniRow(row) {
 
         const [no, namaLengkap, fakultas, ormawa, jabatan, tahunMenjabat, lkmmTm] = row;
 
-        return [no, namaLengkap, fakultas, ormawa, jabatan, tahunMenjabat, lkmmTm, inferAlumniLevel(ormawa, jabatan), "Tidak Diketahui"];
+        return [no, namaLengkap, fakultas, ormawa, jabatan, tahunMenjabat, lkmmTm, inferAlumniLevel(ormawa, jabatan), "Tidak Diketahui", "Unknown"];
 
     }
 
@@ -317,6 +323,20 @@ function getAlumniOrg(row) {
 
 }
 
+function getAlumniSingkatan(row) {
+
+    const singkatan = String(row[9] || "").replace(/\s+/g, " ").trim();
+
+    if (!singkatan || singkatan === "-") {
+
+        return "Unknown";
+
+    }
+
+    return singkatan;
+
+}
+
 function getAlumniOrmawa(row) {
 
     const ormawa = String(row[3] || "").replace(/\s+/g, " ").trim();
@@ -343,7 +363,7 @@ function getFilteredAlumniRows() {
         if (alumniState.selectedOrg && getAlumniOrg(row) !== alumniState.selectedOrg) {
             return false;
         }
-        if (alumniState.selectedOrmawa && getAlumniOrmawa(row) !== alumniState.selectedOrmawa) {
+        if (alumniState.selectedOrmawa && getAlumniSingkatan(row) !== alumniState.selectedOrmawa) {
             return false;
         }
         return true;
@@ -408,14 +428,18 @@ function getAlumniOrmawaGroups() {
 
     getFilteredAlumniRows().forEach(row => {
 
-        const ormawa = getAlumniOrmawa(row);
-        groups.set(ormawa, (groups.get(ormawa) || 0) + 1);
+        const singkatan = getAlumniSingkatan(row);
+        groups.set(singkatan, (groups.get(singkatan) || 0) + 1);
 
     });
 
     return Array.from(groups.entries())
-    .map(([ormawa, count]) => ({ ormawa, count }))
-    .sort((left, right) => right.count - left.count || left.ormawa.localeCompare(right.ormawa));
+    .map(([singkatan, count]) => ({ singkatan, count }))
+    .sort((left, right) => {
+        if (left.singkatan === "Unknown") return 1;
+        if (right.singkatan === "Unknown") return -1;
+        return right.count - left.count || left.singkatan.localeCompare(right.singkatan);
+    });
 
 }
 
@@ -898,11 +922,11 @@ function renderAlumniOrmawaChart() {
     const bars = groups.map((group, index) => {
 
         const barHeight = Math.max(minBarHeight, (group.count / maxCount) * chartHeight);
-        const color = getFacultyColor(group.ormawa);
-        const truncatedLabel = group.ormawa.length > 12 ? group.ormawa.substring(0, 12) + "..." : group.ormawa;
+        const color = getFacultyColor(group.singkatan);
+        const truncatedLabel = group.singkatan.length > 12 ? group.singkatan.substring(0, 12) + "..." : group.singkatan;
 
         return `
-            <div class="alumni-bar" data-ormawa="${escapeHtml(group.ormawa)}" title="${escapeHtml(group.ormawa)}" style="height: ${containerHeight}px;">
+            <div class="alumni-bar" data-singkatan="${escapeHtml(group.singkatan)}" title="${escapeHtml(group.singkatan)}" style="height: ${containerHeight}px;">
                 <div class="alumni-bar-inner" style="height: ${chartHeight}px; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; gap:6px; box-sizing:border-box; width:100%;">
                     <div class="alumni-bar-value">${group.count}</div>
                     <div class="alumni-bar-column" style="height: ${barHeight}px; background: ${color};"></div>
@@ -925,12 +949,12 @@ if (alumniOrmawaChartMount) {
 
     alumniOrmawaChartMount.addEventListener("click", event => {
 
-        const ormawaTarget = event.target.closest("[data-ormawa]");
+        const singkatanTarget = event.target.closest("[data-singkatan]");
 
-        if (ormawaTarget) {
+        if (singkatanTarget) {
 
-            const ormawa = ormawaTarget.getAttribute("data-ormawa") || "";
-            setAlumniOrmawaFilter(ormawa);
+            const singkatan = singkatanTarget.getAttribute("data-singkatan") || "";
+            setAlumniOrmawaFilter(singkatan);
 
         }
 
@@ -940,7 +964,6 @@ if (alumniOrmawaChartMount) {
 
 function setAlumniOrmawaFilter(ormawa) {
 
-    // Store selected ormawa in state (add to state object if needed)
     alumniState.selectedOrmawa = alumniState.selectedOrmawa === ormawa ? "" : ormawa;
     alumniState.currentPage = 1;
     renderAlumniChart();
