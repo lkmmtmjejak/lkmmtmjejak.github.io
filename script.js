@@ -86,6 +86,24 @@ const pageSections = document.querySelectorAll(".page-section");
 
 
 // ==========================================
+// ANALYTICS: VIRTUAL PAGE VIEWS
+// ==========================================
+
+function trackVirtualPage(sectionName) {
+
+    if (typeof gtag === "function") {
+
+        gtag("event", "page_view", {
+            page_path: `/#${sectionName}`,
+            page_location: `${window.location.origin}${window.location.pathname}#${sectionName}`
+        });
+
+    }
+
+}
+
+
+// ==========================================
 // ALUMNI TABLE FROM CSV
 // ==========================================
 
@@ -1294,6 +1312,7 @@ function activateSection(targetSection) {
     if (activeSection) {
 
         activeSection.classList.add("active-section");
+        trackVirtualPage(targetSection);
 
     }
 
