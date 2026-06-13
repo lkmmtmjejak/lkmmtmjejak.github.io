@@ -1605,7 +1605,7 @@ function createAnnouncementModal() {
 
 }
 
-function showAnnouncementModal(message, title = "Recruitment") {
+function showAnnouncementModal(message, title = "Recruitment", isWide = false) {
 
     createAnnouncementModal();
 
@@ -1616,13 +1616,22 @@ function showAnnouncementModal(message, title = "Recruitment") {
 
     }
 
+    const card = announcementModal.querySelector('.announcement-modal-card');
+    if (card) {
+        if (isWide) {
+            card.classList.add('wide');
+        } else {
+            card.classList.remove('wide');
+        }
+    }
+
     if (announcementModalTitle) {
 
         announcementModalTitle.textContent = title;
 
     }
 
-    announcementModalMessage.textContent = message;
+    announcementModalMessage.innerHTML = message;
     announcementModal.classList.add("show");
     announcementModal.setAttribute("aria-hidden", "false");
 
@@ -1644,6 +1653,7 @@ function hideAnnouncementModal() {
 
     announcementModal.classList.remove("show");
     announcementModal.setAttribute("aria-hidden", "true");
+    announcementModal.querySelector('.announcement-modal-card')?.classList.remove('wide');
 
 }
 
@@ -1788,6 +1798,236 @@ if (backgroundMusic && musicToggle) {
 
     });
 
+}
+
+// WIRE UP TATA TERTIB TES TULIS MODAL
+const btnTataTertibTesTulis = document.getElementById("btn-tata-tertib-tes-tulis");
+if (btnTataTertibTesTulis) {
+    btnTataTertibTesTulis.addEventListener("click", (event) => {
+        event.preventDefault();
+        const tataTertibHtml = `
+            <p style="text-align: center; font-weight: 700; margin-top: -8px; margin-bottom: 16px; font-size: 1.05rem; color: var(--accent-dark);">LKMM TM ITS &ldquo;JEJAK&rdquo; 2026</p>
+            <ul style="text-align: left; padding-left: 18px; margin-bottom: 18px; font-size: 0.88rem; line-height: 1.5; color: var(--text); list-style-type: disc;">
+                <li style="margin-bottom: 6px;">Tes Tulis dilaksanakan pada Sabtu, 20 Juni 2026 pukul 13.30 - selesai.</li>
+                <li style="margin-bottom: 6px;">Peserta diwajibkan hadir 15 menit sebelumnya untuk melakukan registrasi.</li>
+                <li style="margin-bottom: 6px;">Peserta diwajibkan mengenakan pakaian standar kuliah.</li>
+                <li style="margin-bottom: 6px;">Peserta diwajibkan mempersiapkan kartu identitas (KTP, KTM, SIM atau KRSM).</li>
+                <li style="margin-bottom: 6px;">Peserta diwajibkan mempersiapkan alat tulis berupa bolpoin dan kertas.</li>
+                <li style="margin-bottom: 6px;">Peserta dilarang mengoperasikan handphone dan barang elektronik lainnya selama tes tulis berlangsung.</li>
+                <li style="margin-bottom: 6px;">Dilarang bertanya dalam bentuk apapun kepada siapapun selain kepada Tim Pemandu Jejak.</li>
+                <li style="margin-bottom: 6px;">Peserta diwajibkan menjaga ketertiban dan kondusifitas selama tes tulis berlangsung.</li>
+                <li style="margin-bottom: 6px;">Dilarang meninggalkan tempat pengerjaan soal selama tes tulis berlangsung.</li>
+                <li style="margin-bottom: 6px;">Peserta wajib menaati tata tertib selama Tes Tulis berlangsung.</li>
+                <li style="margin-bottom: 6px;">Segala bentuk kecurangan dapat mempengaruhi status kepesertaan itu sendiri.</li>
+                <li style="margin-bottom: 6px;">Kisi &ndash; kisi tes tulis: Wawasan KM ITS, Wawasan ITS, Wawasan LKMM, dan Pengetahuan Umum.</li>
+            </ul>
+            <p style="text-align: justify; font-size: 0.82rem; line-height: 1.45; color: var(--muted); border-top: 1px solid rgba(122, 78, 78, 0.12); padding-top: 10px; margin-top: 10px;">
+                Apabila ada yang berhalangan hadir dikarenakan alasan akademik pada saat Tes Tulis berlangsung, diharapkan menghubungi OA Line Tim Pemandu LKMM TM ITS 2026 (<strong>@ajf2331n</strong>) untuk melakukan konfirmasi maksimal Minggu, 14 Juni 2026 pukul 20.00 WIB.
+            </p>
+            <div style="margin-top: 16px; text-align: center;">
+                <a href="https://lin.ee/NpUKcdM" target="_blank" class="main-button" style="max-width: none; margin-top: 0; padding: 12px 20px; font-size: 0.96rem; background: linear-gradient(135deg, #06C755, #05B04B); box-shadow: 0 8px 20px rgba(6, 199, 85, 0.24); border-radius: 999px; box-sizing: border-box; text-decoration: none; font-weight: 700; color: #fff; display: inline-flex; justify-content: center; align-items: center; gap: 8px;">
+                    💬 Hubungi OA Line Pemandu (@ajf2331n)
+                </a>
+            </div>
+        `;
+        showAnnouncementModal(tataTertibHtml, "TATA TERTIB TES TULIS", true);
+    });
+}
+
+// PARTICIPANTS LIST & MODAL LOGIC FOR LOLOS BERKAS
+const lolosBerkasParticipants = [
+    { nama: "Achmad Hafidur Rohman", nrp: "5002241158" },
+    { nama: "Adrian Maulana Rizky", nrp: "5019241010" },
+    { nama: "Ahmad Kholid Fauzi", nrp: "5007241094" },
+    { nama: "Aidan Abdie Sidratul Muntaha", nrp: "5049241080" },
+    { nama: "Ailsa Nabilah Arifin", nrp: "5029241076" },
+    { nama: "Ali akbar fadilah", nrp: "5006241074" },
+    { nama: "Alya Hasna Fadilah", nrp: "5024241044" },
+    { nama: "Ananda Indah Febrianti", nrp: "2041241073" },
+    { nama: "Ancha Juvero", nrp: "5007241056" },
+    { nama: "Andhika Abhipraya Sunjaya", nrp: "5018241060" },
+    { nama: "Andi Waldan Danish Savaraz Palinrungi", nrp: "5012241188" },
+    { nama: "Andrea Felicia Ranggong", nrp: "5049241071" },
+    { nama: "Anindya Galuh Candrasmoerti", nrp: "5049241099" },
+    { nama: "Annisa Dessyifani", nrp: "2040241038" },
+    { nama: "Ardiansyah Zacky Saputra", nrp: "2038241023" },
+    { nama: "Arya Agung Suryokusumo", nrp: "5016241066" },
+    { nama: "At-Thoriqul Mahsyar", nrp: "5001241099" },
+    { nama: "Atrasinah Niha Bahiirah", nrp: "2041241004" },
+    { nama: "Aussie Rezali Ramadhan Bawolje Junior", nrp: "5046241007" },
+    { nama: "Barutama Alfaturrahman", nrp: "5018241011" },
+    { nama: "Brammanda Nevan Susilo", nrp: "5012241001" },
+    { nama: "Briu Fadil Hidayat", nrp: "5009241133" },
+    { nama: "Briyan Ramadiawan", nrp: "5016241064" },
+    { nama: "Cahaya Marsyabillah Suwandhi Putri", nrp: "5016241079" },
+    { nama: "Chania Lamria Karien Silitonga", nrp: "5006241071" },
+    { nama: "Christofher Halim Wijaya", nrp: "5020241020" },
+    { nama: "Christopher Joenathan Hindarto", nrp: "5024241028" },
+    { nama: "Christya Amanda", nrp: "5008241066" },
+    { nama: "DARIS MUFID SASWANDIKA", nrp: "5018241102" },
+    { nama: "Daud Rosevelt Simanjuntak", nrp: "50181241063" },
+    { nama: "Dean Gathan Supriadi", nrp: "5045241018" },
+    { nama: "Dewi Nailul Muna", nrp: "5014241055" },
+    { nama: "Dhiwa Irfanul Hadi", nrp: "5004241070" },
+    { nama: "Dika Fahreza Yusna", nrp: "5049241056" },
+    { nama: "Dinar Aisyah Khairinnisa", nrp: "5014241026" },
+    { nama: "Eilada Kaylie Aruneendria", nrp: "5023241078" },
+    { nama: "Ekin Farhat Hauda", nrp: "2035241081" },
+    { nama: "Elita Evelinanda", nrp: "5015241087" },
+    { nama: "Evalia Dwi Kusumawati", nrp: "5003241043" },
+    { nama: "Fairuz Aulia Rahman", nrp: "5016241050" },
+    { nama: "Farhan Alam Mahmud", nrp: "5006241034" },
+    { nama: "Fattah Rizkia Darmawan", nrp: "5011241090" },
+    { nama: "Felicia Calista Siringoringo", nrp: "5021241079" },
+    { nama: "Fikri Artha Maulana", nrp: "5007241184" },
+    { nama: "Fikri Taqiyuddin Azfa Pratama", nrp: "5007241075" },
+    { nama: "George Eldzen Edison", nrp: "5052241024" },
+    { nama: "Ghaley Ikhbar Abdillah", nrp: "5012241074" },
+    { nama: "Hadiyanul Faza Musyaffa", nrp: "5033241028" },
+    { nama: "Hakan Maulana Yazid Zidane", nrp: "2042241008" },
+    { nama: "Hardiansyah Eka Prasetyo", nrp: "5023241010" },
+    { nama: "Himawan Rakha Bhadra", nrp: "5025241028" },
+    { nama: "Ibnu Hylmi Rizqullah", nrp: "5018241019" },
+    { nama: "Ibrohim", nrp: "504241062" },
+    { nama: "Ilham Fathurachman Trinugraha", nrp: "5009241139" },
+    { nama: "Jahfal Maulidiyahya Arlan Putera", nrp: "5012241054" },
+    { nama: "Jasmine Ramadhania Putri Kusnaryanto", nrp: "5006241033" },
+    { nama: "Josua Ruben Dion Sirait", nrp: "5007241061" },
+    { nama: "Leon Hersamsi", nrp: "5055241049" },
+    { nama: "Lucky Himawan Prasetya", nrp: "5025241147" },
+    { nama: "M. Ariel Fitrah Faishal", nrp: "5016241052" },
+    { nama: "M. Zaky Fahrezy", nrp: "5011241196" },
+    { nama: "Malika Nur Indriati", nrp: "5014241127" },
+    { nama: "Marcello Sergio Lontokan", nrp: "5017241072" },
+    { nama: "Maulana Fajar Firmansyah", nrp: "2036241047" },
+    { nama: "Misbah Alifia Fahmi", nrp: "5046241051" },
+    { nama: "Moh. Fawwaz Azalia Alim", nrp: "5023241012" },
+    { nama: "Muh. Zaki Ziyaul Haq", nrp: "5014241123" },
+    { nama: "Muhamad Farhan Ibrahim Movic", nrp: "5021241054" },
+    { nama: "Muhamad Fattur Rizqy Ilham", nrp: "5018241031" },
+    { nama: "Muhammad Abid Al Kautsar", nrp: "5046241066" },
+    { nama: "Muhammad Abid Rabbani", nrp: "5007241123" },
+    { nama: "Muhammad Adi Anugerah Arrahman", nrp: "5025241118" },
+    { nama: "Muhammad Assaifunnadhif Alkhifdzi", nrp: "5023241031" },
+    { nama: "Muhammad Bintang Al Ghozali", nrp: "2042241060" },
+    { nama: "Muhammad Farhan", nrp: "5003241063" },
+    { nama: "Muhammad Gibran Adyatma Rachman", nrp: "5012241103" },
+    { nama: "Muhammad Guntur Maulana Mursalim", nrp: "5005241101" },
+    { nama: "Muhammad Ma'ash Nursalim", nrp: "2042241012" },
+    { nama: "Muhammad Nauvel Al Abror", nrp: "5016241015" },
+    { nama: "Muhammad Omar Dewantara", nrp: "2043241099" },
+    { nama: "Muhammad Puji Prastyo", nrp: "2040241074" },
+    { nama: "Muhammad Rafi Ardiansyah", nrp: "2035241065" },
+    { nama: "Muhammad Zain Haqqani", nrp: "5001241086" },
+    { nama: "Mukhamad Abyan Hilal", nrp: "2041241058" },
+    { nama: "Na'ilah Salma", nrp: "5020241115" },
+    { nama: "Nabil Fattah Risqullah", nrp: "5004241102" },
+    { nama: "Najma Lail Arazy", nrp: "5025241243" },
+    { nama: "Naufal Rafa Muhammad Hisyam", nrp: "5033241118" },
+    { nama: "Nikita Cavalera H", nrp: "2040241053" },
+    { nama: "Nuha Abidatul R", nrp: "5021241039" },
+    { nama: "Nurfauziah Hanum", nrp: "5014241118" },
+    { nama: "Panglima Nararya Hutama", nrp: "5006241068" },
+    { nama: "Puan Amira Adla", nrp: "5033241012" },
+    { nama: "Qitasandrina Alberta Chairunisa", nrp: "5050241043" },
+    { nama: "Qonita Azzahira", nrp: "5012241062" },
+    { nama: "Rafael Kevin Riskajaya", nrp: "5029241040" },
+    { nama: "Renata Dea Elvira", nrp: "5029241006" },
+    { nama: "Rizky Arkan Nashif", nrp: "5016241081" },
+    { nama: "Rr. Allifza Aulia Artha Putri", nrp: "5021241010" },
+    { nama: "Ryo Dwi Putro Adi", nrp: "5016241089" },
+    { nama: "Selvia Adzania Arifiyanti", nrp: "5003241025" },
+    { nama: "Shafira Nauraishma Zahida", nrp: "5025241235" },
+    { nama: "Tesalonika Eunike Widodo", nrp: "5010241116" },
+    { nama: "Tsabita Amalia Aufa", nrp: "5013240163" },
+    { nama: "Valencia Caesari Sepverin", nrp: "5012241130" },
+    { nama: "Wira Aryaguna", nrp: "5016241007" },
+    { nama: "Yuan Cahya Adhitya", nrp: "5020241065" },
+    { nama: "Yuditya Denis Fitran Syah", nrp: "5016241056" },
+    { nama: "Zasqy'a Nitansyah Ramadhani", nrp: "5011241006" }
+];
+
+const btnLolosBerkas = document.getElementById("btn-lolos-berkas");
+if (btnLolosBerkas) {
+    btnLolosBerkas.addEventListener("click", (event) => {
+        event.preventDefault();
+
+        let rowsHtml = "";
+        lolosBerkasParticipants.forEach((p, idx) => {
+            const bg = idx % 2 === 0 ? 'rgba(255,255,255,0.9)' : 'rgba(122, 78, 78, 0.02)';
+            rowsHtml += `
+                <tr style="background: ${bg}; border-bottom: 1px solid rgba(122, 78, 78, 0.08); transition: background-color 0.2s;">
+                    <td style="padding: 10px 16px; color: var(--muted); font-weight: 600;">${idx + 1}</td>
+                    <td style="padding: 10px 16px; font-weight: 600; color: var(--text);">${p.nama}</td>
+                    <td style="padding: 10px 16px; color: var(--text); font-family: monospace; font-size: 0.9rem;">${p.nrp}</td>
+                </tr>
+            `;
+        });
+
+        const lolosBerkasHtml = `
+            <div class="selection-search-wrapper" style="margin-bottom: 14px; position: relative;">
+                <input type="text" id="selection-search" placeholder="Cari nama atau NRP..." style="width: 100%; padding: 12px 18px; border-radius: 999px; border: 1px solid rgba(122, 78, 78, 0.18); background: #fff; font-size: 0.94rem; outline: none; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); transition: border-color 0.2s; box-sizing: border-box;">
+            </div>
+            <div class="selection-table-container" style="max-height: 280px; overflow-y: auto; border: 1px solid rgba(122, 78, 78, 0.12); border-radius: 14px; background: #fff; box-shadow: 0 4px 12px rgba(64, 43, 43, 0.04);">
+                <table style="width: 100%; border-collapse: separate; border-spacing: 0; text-align: left; font-size: 0.88rem; margin: 0;">
+                    <thead>
+                        <tr>
+                            <th style="padding: 12px 16px; font-weight: 700; color: var(--accent-dark); width: 50px; background: #faf4ee; border-bottom: 2px solid rgba(122, 78, 78, 0.15); position: sticky; top: 0; z-index: 10; box-shadow: 0 3px 6px rgba(64, 43, 43, 0.08);">No</th>
+                            <th style="padding: 12px 16px; font-weight: 700; color: var(--accent-dark); background: #faf4ee; border-bottom: 2px solid rgba(122, 78, 78, 0.15); position: sticky; top: 0; z-index: 10; box-shadow: 0 3px 6px rgba(64, 43, 43, 0.08);">Nama Lengkap</th>
+                            <th style="padding: 12px 16px; font-weight: 700; color: var(--accent-dark); width: 120px; background: #faf4ee; border-bottom: 2px solid rgba(122, 78, 78, 0.15); position: sticky; top: 0; z-index: 10; box-shadow: 0 3px 6px rgba(64, 43, 43, 0.08);">NRP</th>
+                        </tr>
+                    </thead>
+                    <tbody id="selection-table-body">
+                        ${rowsHtml}
+                    </tbody>
+                </table>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 18px;">
+                <a href="https://its.id/m/LolosBerkasTM2026" target="_blank" class="main-button" style="max-width: none; margin-top: 0; padding: 12px 16px; background: linear-gradient(135deg, var(--accent), var(--accent-dark)); box-shadow: 0 8px 16px rgba(143, 81, 81, 0.16); box-sizing: border-box; text-decoration: none; border-radius: 999px; font-weight: 700; color: #fff;">
+                    📄 Lihat Surat Resmi Kelolosan
+                </a>
+                <a href="https://lin.ee/NpUKcdM" target="_blank" class="main-button" style="max-width: none; margin-top: 0; padding: 14px 20px; font-size: 1.05rem; background: linear-gradient(135deg, #06C755, #05B04B); box-shadow: 0 8px 20px rgba(6, 199, 85, 0.24); border-radius: 999px; box-sizing: border-box; text-decoration: none; font-weight: 700; color: #fff;">
+                    💬 Hubungi OA Line Tim Pemandu
+                </a>
+            </div>
+        `;
+
+        showAnnouncementModal(lolosBerkasHtml, "Peserta Lolos Seleksi Pemberkasan", true);
+
+        // Attach search filter listener
+        const searchInput = document.getElementById("selection-search");
+        const tableBody = document.getElementById("selection-table-body");
+        if (searchInput && tableBody) {
+            searchInput.focus();
+            searchInput.addEventListener("input", (e) => {
+                const query = e.target.value.toLowerCase().trim();
+                let visibleCount = 0;
+                const rows = tableBody.querySelectorAll("tr:not(#no-result-row)");
+                rows.forEach((row) => {
+                    const name = row.children[1].textContent.toLowerCase();
+                    const nrp = row.children[2].textContent.toLowerCase();
+                    if (name.includes(query) || nrp.includes(query)) {
+                        row.style.display = "";
+                        visibleCount++;
+                    } else {
+                        row.style.display = "none";
+                    }
+                });
+
+                let noResultRow = document.getElementById("no-result-row");
+                if (visibleCount === 0) {
+                    if (!noResultRow) {
+                        const tr = document.createElement("tr");
+                        tr.id = "no-result-row";
+                        tr.innerHTML = `<td colspan="3" style="padding: 20px; text-align: center; color: var(--muted); font-style: italic;">Nama atau NRP tidak ditemukan</td>`;
+                        tableBody.appendChild(tr);
+                    }
+                } else if (noResultRow) {
+                    noResultRow.remove();
+                }
+            });
+        }
+    });
 }
 
  
