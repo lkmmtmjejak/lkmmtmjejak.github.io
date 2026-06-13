@@ -1989,7 +1989,7 @@ if (btnLolosBerkas) {
             </div>
         `;
 
-        showAnnouncementModal(lolosBerkasHtml, "Peserta Lolos Seleksi Pemberkasan <a href='https://its.id/m/LolosBerkasTM2026' target='_blank' style='text-decoration: none; margin-left: 8px; font-size: 1.3rem; display: inline-flex; align-items: center; vertical-align: middle; cursor: pointer;' title='Lihat Surat Resmi Kelolosan'>📄</a>", true);
+        showAnnouncementModal(lolosBerkasHtml, "Peserta Lolos Seleksi Pemberkasan <a href='https://its.id/m/LolosBerkasTM2026' target='_blank' class='announcement-title-link' title='Lihat Surat Resmi Kelolosan'>📄</a>", true);
 
         // Attach search filter listener
         const searchInput = document.getElementById("selection-search");
