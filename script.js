@@ -1565,9 +1565,9 @@ function createAnnouncementModal() {
 
     announcementModal.innerHTML = `
         <div class="announcement-modal-card" role="dialog" aria-modal="true" aria-label="Informasi Pengumuman">
+            <button type="button" class="announcement-modal-close" aria-label="Tutup modal">&times;</button>
             <h3>Recruitment</h3>
             <p class="announcement-modal-message"></p>
-            <button type="button" class="announcement-modal-close">Oke, siap</button>
         </div>
     `;
 
@@ -1627,7 +1627,7 @@ function showAnnouncementModal(message, title = "Recruitment", isWide = false) {
 
     if (announcementModalTitle) {
 
-        announcementModalTitle.textContent = title;
+        announcementModalTitle.innerHTML = title;
 
     }
 
@@ -1983,16 +1983,13 @@ if (btnLolosBerkas) {
                 </table>
             </div>
             <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 18px;">
-                <a href="https://its.id/m/LolosBerkasTM2026" target="_blank" class="main-button" style="max-width: none; margin-top: 0; padding: 12px 16px; background: linear-gradient(135deg, var(--accent), var(--accent-dark)); box-shadow: 0 8px 16px rgba(143, 81, 81, 0.16); box-sizing: border-box; text-decoration: none; border-radius: 999px; font-weight: 700; color: #fff;">
-                    📄 Lihat Surat Resmi Kelolosan
-                </a>
                 <a href="https://lin.ee/NpUKcdM" target="_blank" class="main-button" style="max-width: none; margin-top: 0; padding: 14px 20px; font-size: 1.05rem; background: linear-gradient(135deg, #06C755, #05B04B); box-shadow: 0 8px 20px rgba(6, 199, 85, 0.24); border-radius: 999px; box-sizing: border-box; text-decoration: none; font-weight: 700; color: #fff;">
                     💬 Hubungi OA Line Tim Pemandu
                 </a>
             </div>
         `;
 
-        showAnnouncementModal(lolosBerkasHtml, "Peserta Lolos Seleksi Pemberkasan", true);
+        showAnnouncementModal(lolosBerkasHtml, "Peserta Lolos Seleksi Pemberkasan <a href='https://its.id/m/LolosBerkasTM2026' target='_blank' style='text-decoration: none; margin-left: 8px; font-size: 1.3rem; display: inline-flex; align-items: center; vertical-align: middle; cursor: pointer;' title='Lihat Surat Resmi Kelolosan'>📄</a>", true);
 
         // Attach search filter listener
         const searchInput = document.getElementById("selection-search");
@@ -2027,6 +2024,49 @@ if (btnLolosBerkas) {
                 }
             });
         }
+    });
+}
+
+// WIRE UP JADWAL TES TULIS MODAL
+const btnJadwalTesTulis = document.getElementById("btn-jadwal-tes-tulis");
+if (btnJadwalTesTulis) {
+    btnJadwalTesTulis.addEventListener("click", (event) => {
+        event.preventDefault();
+        const jadwalHtml = `
+            <p style="text-align: center; font-weight: 700; margin-top: -8px; margin-bottom: 20px; font-size: 1.05rem; color: var(--accent-dark);">LKMM TM ITS &ldquo;JEJAK&rdquo; 2026</p>
+            <div style="text-align: left; margin-bottom: 20px; font-size: 0.94rem; line-height: 1.6; color: var(--text); background: rgba(122, 78, 78, 0.03); border: 1px solid rgba(122, 78, 78, 0.1); padding: 16px; border-radius: 14px;">
+                <div style="margin-bottom: 12px; display: flex; align-items: flex-start; gap: 8px;">
+                    <span style="font-size: 1.2rem; flex-shrink: 0;">📍</span>
+                    <div>
+                        <strong>Lokasi:</strong><br>
+                        Lantai 7, Tower 1 ITS
+                    </div>
+                </div>
+                <div style="margin-bottom: 12px; display: flex; align-items: flex-start; gap: 8px;">
+                    <span style="font-size: 1.2rem; flex-shrink: 0;">📅</span>
+                    <div>
+                        <strong>Hari, Tanggal:</strong><br>
+                        Sabtu, 20 Juni 2026
+                    </div>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;">
+                    <span style="font-size: 1.2rem; flex-shrink: 0;">⏰</span>
+                    <div>
+                        <strong>Waktu:</strong><br>
+                        13.30 WIB - selesai
+                    </div>
+                </div>
+            </div>
+            <p style="text-align: justify; font-size: 0.84rem; line-height: 1.45; color: var(--muted); border-top: 1px solid rgba(122, 78, 78, 0.12); padding-top: 10px; margin-top: 10px;">
+                Bagi peserta yang berhalangan hadir dikarenakan alasan akademik pada saat Tes Tulis berlangsung, harap segera menghubungi OA Line Tim Pemandu LKMM TM ITS 2026 untuk melakukan konfirmasi.
+            </p>
+            <div style="margin-top: 16px; text-align: center;">
+                <a href="https://lin.ee/NpUKcdM" target="_blank" class="main-button" style="max-width: none; margin-top: 0; padding: 12px 20px; font-size: 0.96rem; background: linear-gradient(135deg, #06C755, #05B04B); box-shadow: 0 8px 20px rgba(6, 199, 85, 0.24); border-radius: 999px; box-sizing: border-box; text-decoration: none; font-weight: 700; color: #fff; display: inline-flex; justify-content: center; align-items: center; gap: 8px;">
+                    💬 Hubungi OA Line Pemandu
+                </a>
+            </div>
+        `;
+        showAnnouncementModal(jadwalHtml, "JADWAL TES TULIS", false);
     });
 }
 
