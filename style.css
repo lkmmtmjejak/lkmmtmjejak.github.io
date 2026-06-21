@@ -1827,21 +1827,21 @@ a.team-card.spesial {
     .nav-links{
         width: 100%;
         justify-content: center;
-        gap: 8px;
+        gap: 6px;
     }
 
     .nav-links li{
-        flex: 1 1 0;
+        flex: 0 1 auto;
         min-width: 0;
     }
 
     .nav-links a{
-        width: 100%;
-        padding: 9px 8px;
-        font-size: 0.84rem;
+        width: auto;
+        padding: 8px 12px;
+        font-size: 0.82rem;
         text-align: center;
         line-height: 1.05;
-        white-space: normal;
+        white-space: nowrap;
     }
 
     .main-header{
@@ -2346,4 +2346,180 @@ a.team-card.spesial {
         border-right: none;
         border-bottom: 1px solid var(--border);
     }
+}
+
+/* ==========================================
+   FAQ PAGE STYLES (NESTED ACCORDION)
+   ========================================== */
+
+.faq-subtitle {
+    text-align: center;
+    color: var(--muted);
+    font-size: 1.05rem;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+.faq-accordion-container {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* GENERAL ACCORDION CONTAINER STYLE */
+.faq-l1-item,
+.faq-l2-item,
+.faq-l3-item {
+    border-radius: 18px;
+    border: 1px solid var(--border);
+    background: var(--surface-strong);
+    box-shadow: 0 4px 12px rgba(64, 43, 43, 0.02);
+    overflow: hidden;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.faq-l1-item:hover,
+.faq-l2-item:hover,
+.faq-l3-item:hover {
+    border-color: rgba(176, 109, 109, 0.3);
+}
+
+.faq-l1-item.active {
+    box-shadow: var(--shadow);
+    border-color: rgba(176, 109, 109, 0.4);
+}
+
+/* HEADERS */
+.faq-l1-header,
+.faq-l2-header,
+.faq-l3-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    background: transparent;
+    border: none;
+    font-family: 'Fraunces', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--accent-dark);
+    text-align: left;
+    outline: none;
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.faq-l1-header:hover,
+.faq-l2-header:hover {
+    background: var(--accent-soft);
+}
+
+/* Level 2 Sub-accordion header style */
+.faq-l2-header {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text);
+    padding: 16px 20px;
+    border-radius: 0;
+}
+
+/* Level 3 Question header style */
+.faq-l3-header {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.98rem;
+    font-weight: 500;
+    color: var(--muted);
+    padding: 14px 18px;
+    line-height: 1.45;
+}
+
+.faq-l3-header:hover {
+    background: rgba(122, 78, 78, 0.02);
+    color: var(--accent-dark);
+}
+
+/* NUMBERS AND ARROWS */
+.faq-num {
+    margin-right: 8px;
+    color: var(--accent);
+}
+
+.faq-arrow {
+    font-size: 0.85rem;
+    color: var(--accent);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.active > button > .faq-arrow {
+    transform: rotate(180deg);
+}
+
+/* SMOOTH ACCORDION COLLAPSE/EXPAND */
+.faq-l1-body,
+.faq-l2-body,
+.faq-l3-body {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.faq-l1-body-inner,
+.faq-l2-body-inner,
+.faq-l3-body-inner {
+    overflow: hidden;
+}
+
+.faq-l1-item.active > .faq-l1-body,
+.faq-l2-item.active > .faq-l2-body,
+.faq-l3-item.active > .faq-l3-body {
+    grid-template-rows: 1fr;
+}
+
+/* BODY INNER SPACING */
+.faq-l1-body-inner {
+    padding: 0 24px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: rgba(122, 78, 78, 0.01);
+    border-top: 1px solid var(--border);
+    padding-top: 20px;
+}
+
+.faq-l2-body-inner {
+    padding: 0 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: rgba(122, 78, 78, 0.01);
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+}
+
+.faq-l3-body-inner {
+    padding: 16px 18px 20px;
+    background: rgba(122, 78, 78, 0.02);
+    border-top: 1px dashed var(--border);
+}
+
+.faq-l3-body-inner p {
+    font-size: 0.94rem;
+    line-height: 1.6;
+    color: var(--text);
+    text-align: justify;
+}
+
+/* Custom shadow highlighting for level 3 active question */
+.faq-l3-item.active {
+    border-color: rgba(176, 109, 109, 0.25);
+    box-shadow: 0 2px 8px rgba(122, 78, 78, 0.04);
+}
+
+.faq-l3-item.active > .faq-l3-header {
+    font-weight: 600;
+    color: var(--accent-dark);
+    background: rgba(176, 109, 109, 0.04);
 }

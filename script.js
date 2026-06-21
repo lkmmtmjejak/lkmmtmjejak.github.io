@@ -2070,4 +2070,40 @@ if (btnJadwalTesTulis) {
     });
 }
 
- 
+// ==========================================
+// FAQ ACCORDION INTERACTIVITY
+// ==========================================
+
+function initFaqAccordion() {
+    const faqHeaders = document.querySelectorAll(".faq-l1-header, .faq-l2-header, .faq-l3-header");
+
+    faqHeaders.forEach(header => {
+        header.addEventListener("click", () => {
+            const item = header.parentElement;
+            const isActive = item.classList.contains("active");
+
+            // Close siblings at the same level
+            const siblingsSelector = 
+                item.classList.contains("faq-l1-item") ? ":scope > .faq-l1-item" :
+                item.classList.contains("faq-l2-item") ? ":scope > .faq-l2-item" :
+                ":scope > .faq-l3-item";
+            
+            const siblings = item.parentElement.querySelectorAll(siblingsSelector);
+            
+            siblings.forEach(sib => {
+                if (sib !== item) {
+                    sib.classList.remove("active");
+                }
+            });
+
+            // Toggle current item
+            if (isActive) {
+                item.classList.remove("active");
+            } else {
+                item.classList.add("active");
+            }
+        });
+    });
+}
+
+initFaqAccordion();
