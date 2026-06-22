@@ -2451,6 +2451,8 @@ a.team-card.spesial {
     font-size: 0.85rem;
     color: var(--accent);
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+    margin-left: 16px;
 }
 
 .active > button > .faq-arrow {
