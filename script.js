@@ -1834,6 +1834,38 @@ if (btnTataTertibTesTulis) {
     });
 }
 
+// WIRE UP TATA TERTIB INTERVIEW MODAL
+const btnTataTertibInterview = document.getElementById("btn-tata-tertib-interview");
+if (btnTataTertibInterview) {
+    btnTataTertibInterview.addEventListener("click", (event) => {
+        event.preventDefault();
+        const tataTertibHtml = `
+            <p style="text-align: center; font-weight: 700; margin-top: -8px; margin-bottom: 16px; font-size: 1.05rem; color: var(--accent-dark);">LKMM TM ITS &ldquo;JEJAK&rdquo; 2026</p>
+            <ul style="text-align: left; padding-left: 18px; margin-bottom: 18px; font-size: 0.88rem; line-height: 1.5; color: var(--text); list-style-type: disc;">
+                <li style="margin-bottom: 6px;">Interview dilaksanakan pada Senin, 29 Juni &ndash; Jumat, 3 Juli 2026.</li>
+                <li style="margin-bottom: 6px;">Interview dilaksanakan melalui platform Zoom.</li>
+                <li style="margin-bottom: 6px;">Peserta diwajibkan mengenakan pakaian standar kuliah dan on cam.</li>
+                <li style="margin-bottom: 6px;">Peserta wajib konfirmasi ke OA Line Pemandu LKMM TM ITS (<strong>@ajf2331n</strong>) terkait kesediaan mengikuti interview maksimal hari Sabtu tanggal 27 Juni 2026 pukul 20.00 WIB. Jika peserta tidak melakukan konfirmasi hingga batas maksimum, maka pemandu berhak menganggap peserta mengundurkan diri atau memberikan sanksi lainnya.</li>
+                <li style="margin-bottom: 6px;">Peserta yang berhalangan hadir saat sesi interview diharapkan menukar jadwal dengan peserta lainnya (dengan persetujuan kedua belah pihak peserta), lalu dikonfirmasikan melalui OA Line Pemandu LKMM TM ITS paling lambat H-1 sebelum jadwal interview pengganti berlangsung.</li>
+                <li style="margin-bottom: 6px;">Peserta diwajibkan konfirmasi kembali terkait kehadiran, 15 menit sebelum waktu pelaksanaan interview, kemudian diberikan tautan zoom interview oleh Tim Pemandu LKMM TM ITS.</li>
+                <li style="margin-bottom: 6px;">Peserta diwajibkan menyalakan video dan memperlihatkan wajah ketika proses interview berlangsung, serta harus berada di tempat yang kondusif.</li>
+                <li style="margin-bottom: 6px;">Peserta diwajibkan menggunakan identitas asli ketika bergabung dalam platform Zoom.</li>
+                <li style="margin-bottom: 6px;">Apabila peserta mengalami kendala berupa tidak ada koneksi internet diwajibkan melakukan konfirmasi ke OA Line Pemandu LKMM TM ITS maksimal H-1 pelaksanaan interview.</li>
+                <li style="margin-bottom: 6px;">Peserta yang tidak mengikuti interview dianggap mengundurkan diri dalam proses seleksi LKMM TM ITS 2026.</li>
+                <li style="margin-bottom: 6px;">Peserta wajib menaati tata tertib selama interview berlangsung.</li>
+                <li style="margin-bottom: 6px;">Keputusan Pemandu tidak dapat diganggu gugat.</li>
+                <li style="margin-bottom: 6px;">Hal-hal yang belum ditetapkan dalam ketentuan di atas akan diputuskan kemudian berdasarkan keputusan Pemandu.</li>
+            </ul>
+            <div style="margin-top: 16px; text-align: center;">
+                <a href="https://lin.ee/NpUKcdM" target="_blank" class="main-button" style="max-width: none; margin-top: 0; padding: 12px 20px; font-size: 0.96rem; background: linear-gradient(135deg, #06C755, #05B04B); box-shadow: 0 8px 20px rgba(6, 199, 85, 0.24); border-radius: 999px; box-sizing: border-box; text-decoration: none; font-weight: 700; color: #fff; display: inline-flex; justify-content: center; align-items: center; gap: 8px;">
+                    💬 Hubungi OA Line Pemandu (@ajf2331n)
+                </a>
+            </div>
+        `;
+        showAnnouncementModal(tataTertibHtml, "TATA TERTIB INTERVIEW", true);
+    });
+}
+
 // PARTICIPANTS LIST & MODAL LOGIC FOR LOLOS BERKAS
 const lolosBerkasParticipants = [
     { nama: "Achmad Hafidur Rohman", nrp: "5002241158" },
@@ -1966,7 +1998,7 @@ if (btnLolosBerkas) {
 
         const lolosBerkasHtml = `
             <div class="selection-search-wrapper" style="margin-bottom: 14px; position: relative;">
-                <input type="text" id="selection-search" placeholder="Cari nama atau NRP..." style="width: 100%; padding: 12px 18px; border-radius: 999px; border: 1px solid rgba(122, 78, 78, 0.18); background: #fff; font-size: 0.94rem; outline: none; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); transition: border-color 0.2s; box-sizing: border-box;">
+                <input type="text" id="selection-search" placeholder="Cari nama atau NRP..." style="width: 100%; padding: 12px 18px; border-radius: 999px; border: 1px solid rgba(122, 78, 78, 0.18); background: #fff; color: #333; caret-color: var(--accent-dark); font-size: 0.94rem; outline: none; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); transition: border-color 0.2s; box-sizing: border-box;">
             </div>
             <div class="selection-table-container" style="max-height: 280px; overflow-y: auto; border: 1px solid rgba(122, 78, 78, 0.12); border-radius: 14px; background: #fff; box-shadow: 0 4px 12px rgba(64, 43, 43, 0.04);">
                 <table style="width: 100%; border-collapse: separate; border-spacing: 0; text-align: left; font-size: 0.88rem; margin: 0;">
@@ -2027,6 +2059,204 @@ if (btnLolosBerkas) {
     });
 }
 
+// PARTICIPANTS LIST & MODAL LOGIC FOR LOLOS SELEKSI TES TULIS
+const lolosTesTulisParticipants = [
+    // Senin, 29 Juni 2026
+    { hari: "Senin, 29 Juni 2026", sesi: "1", jam: "14.00-15.00", nama: "Achmad Hafidur Rohman", nrp: "5002241158" },
+    { hari: "Senin, 29 Juni 2026", sesi: "2", jam: "15.30-16.30", nama: "Adrian Maulana Rizky", nrp: "5019241010" },
+    { hari: "Senin, 29 Juni 2026", sesi: "2", jam: "15.30-16.30", nama: "Ahmad Kholid Fauzi", nrp: "5007241094" },
+    { hari: "Senin, 29 Juni 2026", sesi: "3", jam: "18.00-19.00", nama: "Ailsa Nabilah Arifin", nrp: "5029241076" },
+    { hari: "Senin, 29 Juni 2026", sesi: "3", jam: "18.00-19.00", nama: "Ali akbar fadilah", nrp: "5006241074" },
+    { hari: "Senin, 29 Juni 2026", sesi: "3", jam: "18.00-19.00", nama: "Alya Hasna Fadilah", nrp: "5024241044" },
+    { hari: "Senin, 29 Juni 2026", sesi: "3", jam: "18.00-19.00", nama: "Ananda Indah Febrianti", nrp: "2041241073" },
+    { hari: "Senin, 29 Juni 2026", sesi: "4", jam: "19.30-20.30", nama: "Ancha Juvero", nrp: "5007241056" },
+    { hari: "Senin, 29 Juni 2026", sesi: "4", jam: "19.30-20.30", nama: "Andhika Abhipraya Sunjaya", nrp: "5018241060" },
+    { hari: "Senin, 29 Juni 2026", sesi: "4", jam: "19.30-20.30", nama: "Andi Waldan Danish Savaraz Palinrungi", nrp: "5012241188" },
+    { hari: "Senin, 29 Juni 2026", sesi: "4", jam: "19.30-20.30", nama: "Annisa Dessyifani", nrp: "2040241038" },
+    { hari: "Senin, 29 Juni 2026", sesi: "4", jam: "19.30-20.30", nama: "Ardiansyah Zacky Saputra", nrp: "2038241023" },
+    { hari: "Senin, 29 Juni 2026", sesi: "5", jam: "21.00-22.00", nama: "Arya Agung Suryokusumo", nrp: "5016241066" },
+    { hari: "Senin, 29 Juni 2026", sesi: "5", jam: "21.00-22.00", nama: "At-Thoriqul Mahsyar", nrp: "5001241099" },
+    { hari: "Senin, 29 Juni 2026", sesi: "5", jam: "21.00-22.00", nama: "Atrasinah Niha Bahiirah", nrp: "2041241004" },
+    { hari: "Senin, 29 Juni 2026", sesi: "5", jam: "21.00-22.00", nama: "Aussie Rezali Ramadhan Bawolje Junior", nrp: "5046241007" },
+    { hari: "Senin, 29 Juni 2026", sesi: "5", jam: "21.00-22.00", nama: "Brammanda Nevan Susilo", nrp: "5012241001" },
+    { hari: "Senin, 29 Juni 2026", sesi: "5", jam: "21.00-22.00", nama: "Briu Fadil Hidayat", nrp: "5009241133" },
+    { hari: "Senin, 29 Juni 2026", sesi: "5", jam: "21.00-22.00", nama: "Briyan Ramadiawan", nrp: "5016241064" },
+    { hari: "Senin, 29 Juni 2026", sesi: "5", jam: "21.00-22.00", nama: "Cahaya Marsyabillah Suwandhi Putri", nrp: "5016241079" },
+
+    // Selasa, 30 Juni 2026
+    { hari: "Selasa, 30 Juni 2026", sesi: "1", jam: "14.00-15.00", nama: "Chania Lamria Karien Silitonga", nrp: "5006241071" },
+    { hari: "Selasa, 30 Juni 2026", sesi: "2", jam: "15.30-16.30", nama: "Christofher Halim Wijaya", nrp: "5020241020" },
+    { hari: "Selasa, 30 Juni 2026", sesi: "2", jam: "15.30-16.30", nama: "Christopher Joenathan Hindarto", nrp: "5024241028" },
+    { hari: "Selasa, 30 Juni 2026", sesi: "3", jam: "18.00-19.00", nama: "Christya Amanda", nrp: "5008241066" },
+    { hari: "Selasa, 30 Juni 2026", sesi: "3", jam: "18.00-19.00", nama: "DARIS MUFID SASWANDIKA", nrp: "5018241102" },
+    { hari: "Selasa, 30 Juni 2026", sesi: "3", jam: "18.00-19.00", nama: "Daud Rosevelt Simanjuntak", nrp: "50181241063" },
+    { hari: "Selasa, 30 Juni 2026", sesi: "4", jam: "19.30-20.30", nama: "Dean Gathan Supriadi", nrp: "5045241018" },
+    { hari: "Selasa, 30 Juni 2026", sesi: "4", jam: "19.30-20.30", nama: "Dewi Nailul Muna", nrp: "5014241055" },
+    { hari: "Selasa, 30 Juni 2026", sesi: "4", jam: "19.30-20.30", nama: "Dhiwa Irfanul Hadi", nrp: "5004241070" },
+    { hari: "Selasa, 30 Juni 2026", sesi: "4", jam: "19.30-20.30", nama: "Dika Fahreza Yusna", nrp: "5049241056" },
+    { hari: "Selasa, 30 Juni 2026", sesi: "4", jam: "19.30-20.30", nama: "Dinar Aisyah Khairinnisa", nrp: "5014241026" },
+    { hari: "Selasa, 30 Juni 2026", sesi: "4", jam: "19.30-20.30", nama: "Eilada Kaylie Aruneendria", nrp: "5023241078" },
+    { hari: "Selasa, 30 Juni 2026", sesi: "5", jam: "21.00-22.00", nama: "Ekin Farhat Hauda", nrp: "2035241081" },
+    { hari: "Selasa, 30 Juni 2026", sesi: "5", jam: "21.00-22.00", nama: "Elita Evelinanda", nrp: "5015241087" },
+    { hari: "Selasa, 30 Juni 2026", sesi: "5", jam: "21.00-22.00", nama: "Evalia Dwi Kusumawati", nrp: "5003241043" },
+    { hari: "Selasa, 30 Juni 2026", sesi: "5", jam: "21.00-22.00", nama: "Fairuz Aulia Rahman", nrp: "5016241050" },
+    { hari: "Selasa, 30 Juni 2026", sesi: "5", jam: "21.00-22.00", nama: "Farhan Alam Mahmud", nrp: "5006241034" },
+    { hari: "Selasa, 30 Juni 2026", sesi: "5", jam: "21.00-22.00", nama: "Fattah Rizkia Darmawan", nrp: "5011241090" },
+    { hari: "Selasa, 30 Juni 2026", sesi: "5", jam: "21.00-22.00", nama: "Felicia Calista Siringoringo", nrp: "5021241079" },
+
+    // Rabu, 1 Juli 2026
+    { hari: "Rabu, 1 Juli 2026", sesi: "1", jam: "14.00-15.00", nama: "Fikri Artha Maulana", nrp: "5007241184" },
+    { hari: "Rabu, 1 Juli 2026", sesi: "2", jam: "15.30-16.30", nama: "Fikri Taqiyuddin Azfa Pratama", nrp: "5007241075" },
+    { hari: "Rabu, 1 Juli 2026", sesi: "3", jam: "18.00-19.00", nama: "George Eldzen Edison", nrp: "5052241024" },
+    { hari: "Rabu, 1 Juli 2026", sesi: "3", jam: "18.00-19.00", nama: "Ghaley Ikhbar Abdillah", nrp: "5012241074" },
+    { hari: "Rabu, 1 Juli 2026", sesi: "4", jam: "19.30-20.30", nama: "Hadiyanul Faza Musyaffa", nrp: "5033241028" },
+    { hari: "Rabu, 1 Juli 2026", sesi: "4", jam: "19.30-20.30", nama: "Hakan Maulana Yazid Zidane", nrp: "2042241008" },
+    { hari: "Rabu, 1 Juli 2026", sesi: "4", jam: "19.30-20.30", nama: "Hardyansyah Eka Prasetyo", nrp: "5023241010" },
+    { hari: "Rabu, 1 Juli 2026", sesi: "4", jam: "19.30-20.30", nama: "Himawan Rakha Bhadra", nrp: "5025241028" },
+    { hari: "Rabu, 1 Juli 2026", sesi: "4", jam: "19.30-20.30", nama: "Ibnu Hylmi Rizqullah", nrp: "5018241019" },
+    { hari: "Rabu, 1 Juli 2026", sesi: "4", jam: "19.30-20.30", nama: "Ibrohim", nrp: "5004241062" },
+    { hari: "Rabu, 1 Juli 2026", sesi: "5", jam: "21.00-22.00", nama: "Ilham Fathurachman Trinugraha", nrp: "5009241139" },
+    { hari: "Rabu, 1 Juli 2026", sesi: "5", jam: "21.00-22.00", nama: "Jahfal Maulidiyahya Arlan Putera", nrp: "5012241054" },
+    { hari: "Rabu, 1 Juli 2026", sesi: "5", jam: "21.00-22.00", nama: "Jasmine Ramadhania Putri Kusnaryanto", nrp: "5006241033" },
+    { hari: "Rabu, 1 Juli 2026", sesi: "5", jam: "21.00-22.00", nama: "Josua Ruben Dion Sirait", nrp: "5007241061" },
+    { hari: "Rabu, 1 Juli 2026", sesi: "5", jam: "21.00-22.00", nama: "Lucky Himawan Prasetya", nrp: "5025241147" },
+    { hari: "Rabu, 1 Juli 2026", sesi: "5", jam: "21.00-22.00", nama: "M. Ariel Fitrah Faishal", nrp: "5016241052" },
+
+    // Kamis, 2 Juli 2026
+    { hari: "Kamis, 2 Juli 2026", sesi: "1", jam: "14.00-15.00", nama: "M. Zaky Fahrezy", nrp: "5011241196" },
+    { hari: "Kamis, 2 Juli 2026", sesi: "2", jam: "15.30-16.30", nama: "Malika Nur Indriati", nrp: "5014241127" },
+    { hari: "Kamis, 2 Juli 2026", sesi: "3", jam: "18.00-19.00", nama: "Marcello Sergio Lontokan", nrp: "5017241072" },
+    { hari: "Kamis, 2 Juli 2026", sesi: "3", jam: "18.00-19.00", nama: "Maulana Fajar Firmansyah", nrp: "2036241047" },
+    { hari: "Kamis, 2 Juli 2026", sesi: "3", jam: "18.00-19.00", nama: "MISBAH ALIFIA FAHMI", nrp: "5046241051" },
+    { hari: "Kamis, 2 Juli 2026", sesi: "3", jam: "18.00-19.00", nama: "Moh. Fawwaz Azalia Alim", nrp: "5023241012" },
+    { hari: "Kamis, 2 Juli 2026", sesi: "3", jam: "18.00-19.00", nama: "Muh. Zaki Ziyaul Haq", nrp: "5014241123" },
+    { hari: "Kamis, 2 Juli 2026", sesi: "4", jam: "19.30-20.30", nama: "Muhamad Farhan Ibrahim Movic", nrp: "5021241054" },
+    { hari: "Kamis, 2 Juli 2026", sesi: "4", jam: "19.30-20.30", nama: "Muhamad Fattur Rizqy Ilham", nrp: "5018241031" },
+    { hari: "Kamis, 2 Juli 2026", sesi: "4", jam: "19.30-20.30", nama: "Muhammad Abid Al Kautsar", nrp: "5046241066" },
+    { hari: "Kamis, 2 Juli 2026", sesi: "4", jam: "19.30-20.30", nama: "Muhammad Abid Rabbani", nrp: "5007241123" },
+    { hari: "Kamis, 2 Juli 2026", sesi: "4", jam: "19.30-20.30", nama: "Muhammad Adi Anugerah Arrahman", nrp: "5025241118" },
+    { hari: "Kamis, 2 Juli 2026", sesi: "4", jam: "19.30-20.30", nama: "Muhammad Assaifunnadhif Alkhifdzi", nrp: "5023241031" },
+    { hari: "Kamis, 2 Juli 2026", sesi: "4", jam: "19.30-20.30", nama: "Muhammad Bintang Al Ghozali", nrp: "2042241060" },
+    { hari: "Kamis, 2 Juli 2026", sesi: "5", jam: "21.00-22.00", nama: "Muhammad Farhan", nrp: "5003241063" },
+    { hari: "Kamis, 2 Juli 2026", sesi: "5", jam: "21.00-22.00", nama: "Muhammad Gibran Adyatma Rachman", nrp: "5012241103" },
+    { hari: "Kamis, 2 Juli 2026", sesi: "5", jam: "21.00-22.00", nama: "Muhammad Guntur Maulana Mursalim", nrp: "5005241101" },
+    { hari: "Kamis, 2 Juli 2026", sesi: "5", jam: "21.00-22.00", nama: "Muhammad Ma'ash Nursalim", nrp: "2042241012" },
+    { hari: "Kamis, 2 Juli 2026", sesi: "5", jam: "21.00-22.00", nama: "Muhammad Nauvel Al Abror", nrp: "5016241015" },
+    { hari: "Kamis, 2 Juli 2026", sesi: "5", jam: "21.00-22.00", nama: "Muhammad Omar Dewantara", nrp: "2043241099" },
+    { hari: "Kamis, 2 Juli 2026", sesi: "5", jam: "21.00-22.00", nama: "Muhammad Rafi Ardiansyah", nrp: "2035241065" },
+
+    // Jumat, 3 Juli 2026
+    { hari: "Jumat, 3 Juli 2026", sesi: "1", jam: "14.00-15.00", nama: "Muhammad Zain Haqqani", nrp: "5001241086" },
+    { hari: "Jumat, 3 Juli 2026", sesi: "2", jam: "15.30-16.30", nama: "Mukhamad Abyan Hilal", nrp: "2041241058" },
+    { hari: "Jumat, 3 Juli 2026", sesi: "3", jam: "18.00-19.00", nama: "Na'ilah Salma", nrp: "5020241115" },
+    { hari: "Jumat, 3 Juli 2026", sesi: "3", jam: "18.00-19.00", nama: "Nabil Fattah Risqullah", nrp: "5004241102" },
+    { hari: "Jumat, 3 Juli 2026", sesi: "3", jam: "18.00-19.00", nama: "Najma Lail Arazy", nrp: "5025241243" },
+    { hari: "Jumat, 3 Juli 2026", sesi: "3", jam: "18.00-19.00", nama: "Naufal Rafa Muhammad Hisyam", nrp: "5033241118" },
+    { hari: "Jumat, 3 Juli 2026", sesi: "3", jam: "18.00-19.00", nama: "Nikita Cavalera H", nrp: "2040241053" },
+    { hari: "Jumat, 3 Juli 2026", sesi: "4", jam: "19.30-20.30", nama: "Nuha Abidatul R", nrp: "5021241039" },
+    { hari: "Jumat, 3 Juli 2026", sesi: "4", jam: "19.30-20.30", nama: "Panglima Nararya Hutama", nrp: "5006241068" },
+    { hari: "Jumat, 3 Juli 2026", sesi: "4", jam: "19.30-20.30", nama: "Puan Amira Adla", nrp: "5033241012" },
+    { hari: "Jumat, 3 Juli 2026", sesi: "4", jam: "19.30-20.30", nama: "Qitasandrina Alberta Chairunisa", nrp: "5050241043" },
+    { hari: "Jumat, 3 Juli 2026", sesi: "4", jam: "19.30-20.30", nama: "Rizky Arkan Nashif", nrp: "5016241081" },
+    { hari: "Jumat, 3 Juli 2026", sesi: "4", jam: "19.30-20.30", nama: "Rr. Allifza Aulia Artha Putri", nrp: "5021241010" },
+    { hari: "Jumat, 3 Juli 2026", sesi: "4", jam: "19.30-20.30", nama: "Ryo Dwi Putro Adi", nrp: "5016241089" },
+    { hari: "Jumat, 3 Juli 2026", sesi: "5", jam: "21.00-22.00", nama: "Selvia Adzania Arifiyanti", nrp: "5003241025" },
+    { hari: "Jumat, 3 Juli 2026", sesi: "5", jam: "21.00-22.00", nama: "Shafira Nauraishma Zahida", nrp: "5025241235" },
+    { hari: "Jumat, 3 Juli 2026", sesi: "5", jam: "21.00-22.00", nama: "Tesalonika Eunike Widodo", nrp: "5010241116" },
+    { hari: "Jumat, 3 Juli 2026", sesi: "5", jam: "21.00-22.00", nama: "Tsabita Amalia Aufa", nrp: "5013240163" },
+    { hari: "Jumat, 3 Juli 2026", sesi: "5", jam: "21.00-22.00", nama: "Wira Aryaguna", nrp: "5016241007" },
+    { hari: "Jumat, 3 Juli 2026", sesi: "5", jam: "21.00-22.00", nama: "Yuan Cahya Adhitya", nrp: "5020241065" },
+    { hari: "Jumat, 3 Juli 2026", sesi: "5", jam: "21.00-22.00", nama: "Yuditya Denis Fitran Syah", nrp: "5016241056" },
+    { hari: "Jumat, 3 Juli 2026", sesi: "5", jam: "21.00-22.00", nama: "Zasqy'a Nitansyah Ramadhani", nrp: "5011241006" }
+];
+
+const btnLolosTesTulis = document.getElementById("btn-lolos-tes-tulis");
+if (btnLolosTesTulis) {
+    btnLolosTesTulis.addEventListener("click", (event) => {
+        event.preventDefault();
+
+        let rowsHtml = "";
+        lolosTesTulisParticipants.forEach((p, idx) => {
+            const bg = idx % 2 === 0 ? 'rgba(255,255,255,0.9)' : 'rgba(122, 78, 78, 0.02)';
+            rowsHtml += `
+                <tr style="background: ${bg}; border-bottom: 1px solid rgba(122, 78, 78, 0.08); transition: background-color 0.2s;">
+                    <td style="padding: 10px 16px; color: var(--muted); font-weight: 600; text-align: center;">${idx + 1}</td>
+                    <td style="padding: 10px 16px; color: var(--text); white-space: nowrap;">${p.hari}</td>
+                    <td style="padding: 10px 16px; color: var(--text); text-align: center; font-weight: 600;">${p.sesi}</td>
+                    <td style="padding: 10px 16px; color: var(--text); white-space: nowrap; font-family: monospace;">${p.jam}</td>
+                    <td style="padding: 10px 16px; font-weight: 600; color: var(--text);">${p.nama}</td>
+                    <td style="padding: 10px 16px; color: var(--text); font-family: monospace; font-size: 0.9rem;">${p.nrp}</td>
+                </tr>
+            `;
+        });
+
+        const lolosTesTulisHtml = `
+            <div class="selection-search-wrapper" style="margin-bottom: 14px; position: relative;">
+                <input type="text" id="selection-search-tulis" placeholder="Cari nama, NRP, atau hari/tanggal..." style="width: 100%; padding: 12px 18px; border-radius: 999px; border: 1px solid rgba(122, 78, 78, 0.18); background: #fff; color: #333; caret-color: var(--accent-dark); font-size: 0.94rem; outline: none; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); transition: border-color 0.2s; box-sizing: border-box;">
+            </div>
+            <div class="selection-table-container" style="max-height: 380px; overflow-y: auto; overflow-x: auto; border: 1px solid rgba(122, 78, 78, 0.12); border-radius: 14px; background: #fff; box-shadow: 0 4px 12px rgba(64, 43, 43, 0.04);">
+                <table style="width: 100%; border-collapse: separate; border-spacing: 0; text-align: left; font-size: 0.88rem; margin: 0; min-width: 680px;">
+                    <thead>
+                        <tr>
+                            <th style="padding: 12px 16px; font-weight: 700; color: var(--accent-dark); width: 50px; background: #faf4ee; border-bottom: 2px solid rgba(122, 78, 78, 0.15); position: sticky; top: 0; z-index: 10; box-shadow: 0 3px 6px rgba(64, 43, 43, 0.08); text-align: center;">No</th>
+                            <th style="padding: 12px 16px; font-weight: 700; color: var(--accent-dark); background: #faf4ee; border-bottom: 2px solid rgba(122, 78, 78, 0.15); position: sticky; top: 0; z-index: 10; box-shadow: 0 3px 6px rgba(64, 43, 43, 0.08); white-space: nowrap;">Hari, Tanggal</th>
+                            <th style="padding: 12px 16px; font-weight: 700; color: var(--accent-dark); width: 60px; background: #faf4ee; border-bottom: 2px solid rgba(122, 78, 78, 0.15); position: sticky; top: 0; z-index: 10; box-shadow: 0 3px 6px rgba(64, 43, 43, 0.08); text-align: center;">Sesi</th>
+                            <th style="padding: 12px 16px; font-weight: 700; color: var(--accent-dark); width: 110px; background: #faf4ee; border-bottom: 2px solid rgba(122, 78, 78, 0.15); position: sticky; top: 0; z-index: 10; box-shadow: 0 3px 6px rgba(64, 43, 43, 0.08); white-space: nowrap;">Jam</th>
+                            <th style="padding: 12px 16px; font-weight: 700; color: var(--accent-dark); background: #faf4ee; border-bottom: 2px solid rgba(122, 78, 78, 0.15); position: sticky; top: 0; z-index: 10; box-shadow: 0 3px 6px rgba(64, 43, 43, 0.08);">Nama Lengkap</th>
+                            <th style="padding: 12px 16px; font-weight: 700; color: var(--accent-dark); width: 120px; background: #faf4ee; border-bottom: 2px solid rgba(122, 78, 78, 0.15); position: sticky; top: 0; z-index: 10; box-shadow: 0 3px 6px rgba(64, 43, 43, 0.08);">NRP</th>
+                        </tr>
+                    </thead>
+                    <tbody id="selection-table-body-tulis">
+                        ${rowsHtml}
+                    </tbody>
+                </table>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 18px;">
+                <a href="https://lin.ee/NpUKcdM" target="_blank" class="main-button" style="max-width: none; margin-top: 0; padding: 14px 20px; font-size: 1.05rem; background: linear-gradient(135deg, #06C755, #05B04B); box-shadow: 0 8px 20px rgba(6, 199, 85, 0.24); border-radius: 999px; box-sizing: border-box; text-decoration: none; font-weight: 700; color: #fff;">
+                    💬 Hubungi OA Line Tim Pemandu
+                </a>
+            </div>
+        `;
+
+        showAnnouncementModal(lolosTesTulisHtml, "Peserta Lolos Seleksi Tes Tulis & Jadwal Interview", true);
+
+        // Attach search filter listener
+        const searchInput = document.getElementById("selection-search-tulis");
+        const tableBody = document.getElementById("selection-table-body-tulis");
+        if (searchInput && tableBody) {
+            searchInput.focus();
+            searchInput.addEventListener("input", (e) => {
+                const query = e.target.value.toLowerCase().trim();
+                let visibleCount = 0;
+                const rows = tableBody.querySelectorAll("tr:not(#no-result-row-tulis)");
+                rows.forEach((row) => {
+                    const tanggal = row.children[1].textContent.toLowerCase();
+                    const name = row.children[4].textContent.toLowerCase();
+                    const nrp = row.children[5].textContent.toLowerCase();
+                    if (name.includes(query) || nrp.includes(query) || tanggal.includes(query)) {
+                        row.style.display = "";
+                        visibleCount++;
+                    } else {
+                        row.style.display = "none";
+                    }
+                });
+
+                let noResultRow = document.getElementById("no-result-row-tulis");
+                if (visibleCount === 0) {
+                    if (!noResultRow) {
+                        const tr = document.createElement("tr");
+                        tr.id = "no-result-row-tulis";
+                        tr.innerHTML = `<td colspan="6" style="padding: 20px; text-align: center; color: var(--muted); font-style: italic;">Nama, NRP, atau tanggal tidak ditemukan</td>`;
+                        tableBody.appendChild(tr);
+                    }
+                } else if (noResultRow) {
+                    noResultRow.remove();
+                }
+            });
+        }
+    });
+}
+
 // WIRE UP JADWAL TES TULIS MODAL
 const btnJadwalTesTulis = document.getElementById("btn-jadwal-tes-tulis");
 if (btnJadwalTesTulis) {
@@ -2067,6 +2297,109 @@ if (btnJadwalTesTulis) {
             </div>
         `;
         showAnnouncementModal(jadwalHtml, "JADWAL TES TULIS", false);
+    });
+}
+
+// WIRE UP JADWAL INTERVIEW MODAL
+const btnJadwalInterview = document.getElementById("btn-jadwal-interview");
+if (btnJadwalInterview) {
+    btnJadwalInterview.addEventListener("click", (event) => {
+        event.preventDefault();
+        const jadwalHtml = `
+            <p style="text-align: center; font-weight: 700; margin-top: -8px; margin-bottom: 20px; font-size: 1.05rem; color: var(--accent-dark);">LKMM TM ITS &ldquo;JEJAK&rdquo; 2026</p>
+            <div style="text-align: left; margin-bottom: 20px; font-size: 0.94rem; line-height: 1.6; color: var(--text); background: rgba(122, 78, 78, 0.03); border: 1px solid rgba(122, 78, 78, 0.1); padding: 16px; border-radius: 14px;">
+                <div style="margin-bottom: 12px; display: flex; align-items: flex-start; gap: 8px;">
+                    <span style="font-size: 1.2rem; flex-shrink: 0;">📍</span>
+                    <div>
+                        <strong>Lokasi:</strong><br>
+                        Zoom Meeting (Online)
+                    </div>
+                </div>
+                <div style="margin-bottom: 12px; display: flex; align-items: flex-start; gap: 8px;">
+                    <span style="font-size: 1.2rem; flex-shrink: 0;">📅</span>
+                    <div>
+                        <strong>Hari, Tanggal:</strong><br>
+                        Senin - Jumat, 29 Juni - 3 Juli 2026
+                    </div>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;">
+                    <span style="font-size: 1.2rem; flex-shrink: 0;">⏰</span>
+                    <div>
+                        <strong>Waktu:</strong><br>
+                        Sesuai sesi masing-masing
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEARCH JADWAL -->
+            <div style="text-align: left; margin-bottom: 20px;">
+                <strong style="display: block; margin-bottom: 8px; font-size: 0.94rem; color: var(--accent-dark);">🔍 Cari Jadwal Interview Anda:</strong>
+                <input type="text" id="search-int-schedule" placeholder="Ketik nama atau NRP Anda..." style="width: 100%; padding: 12px 16px; border-radius: 999px; border: 1px solid rgba(122, 78, 78, 0.18); background: #fff; color: #333; caret-color: var(--accent-dark); font-size: 0.94rem; outline: none; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); transition: border-color 0.2s; box-sizing: border-box;">
+                
+                <div id="search-int-result" style="margin-top: 12px; padding: 14px; border-radius: 14px; background: rgba(122, 78, 78, 0.02); border: 1px solid rgba(122, 78, 78, 0.08); min-height: 52px; box-sizing: border-box;">
+                    <p style="margin: 0; color: var(--muted); font-style: italic; font-size: 0.86rem; text-align: center;">Ketik nama atau NRP di atas untuk melihat jadwal interview Anda.</p>
+                </div>
+            </div>
+
+            <!-- WARNINGS -->
+            <div style="text-align: left; font-size: 0.86rem; line-height: 1.5; color: var(--muted); border-top: 1px solid rgba(122, 78, 78, 0.12); padding-top: 14px;">
+                <strong style="color: #c0392b; display: block; margin-bottom: 6px; font-size: 0.9rem;">⚠️ PENTING:</strong>
+                <ul style="padding-left: 18px; margin: 0; list-style-type: decimal; color: var(--text);">
+                    <li style="margin-bottom: 6px;">Wajib menghubungi pemandu mengenai bisa atau tidaknya mengikuti interview.</li>
+                    <li style="margin-bottom: 6px;">Jika berhalangan hadir di sesi tersebut, segera cari pengganti sendiri dan wajib konfirmasi ke pemandu juga!</li>
+                    <li style="margin-bottom: 6px;">Link Zoom hanya akan dibagikan ketika peserta menghubungi pemandu melalui OA Line.</li>
+                </ul>
+            </div>
+
+            <div style="margin-top: 18px; text-align: center;">
+                <a href="https://lin.ee/NpUKcdM" target="_blank" class="main-button" style="max-width: none; margin-top: 0; padding: 14px 20px; font-size: 1.02rem; background: linear-gradient(135deg, #06C755, #05B04B); box-shadow: 0 8px 20px rgba(6, 199, 85, 0.24); border-radius: 999px; box-sizing: border-box; text-decoration: none; font-weight: 700; color: #fff; display: inline-flex; justify-content: center; align-items: center; gap: 8px;">
+                    💬 Hubungi OA Line Pemandu
+                </a>
+            </div>
+        `;
+        showAnnouncementModal(jadwalHtml, "JADWAL INTERVIEW", false);
+
+        // Attach interactive search logic
+        const searchInput = document.getElementById("search-int-schedule");
+        const resultContainer = document.getElementById("search-int-result");
+
+        if (searchInput && resultContainer) {
+            searchInput.focus();
+            searchInput.addEventListener("input", (e) => {
+                const query = e.target.value.toLowerCase().trim();
+
+                if (!query) {
+                    resultContainer.innerHTML = `<p style="margin: 0; color: var(--muted); font-style: italic; font-size: 0.86rem; text-align: center;">Ketik nama atau NRP di atas untuk melihat jadwal interview Anda.</p>`;
+                    return;
+                }
+
+                // Filter participants
+                const matches = lolosTesTulisParticipants.filter(p => 
+                    p.nama.toLowerCase().includes(query) || p.nrp.toLowerCase().includes(query)
+                );
+
+                if (matches.length === 0) {
+                    resultContainer.innerHTML = `<p style="margin: 0; color: #c0392b; font-style: italic; font-size: 0.86rem; text-align: center; font-weight: 600;">Data tidak ditemukan. Pastikan nama atau NRP dimasukkan dengan benar.</p>`;
+                } else {
+                    // Render matches list
+                    let listHtml = `<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px;">`;
+                    matches.forEach((p, index) => {
+                        const borderStyle = index === matches.length - 1 ? "" : "border-bottom: 1px solid rgba(122, 78, 78, 0.06); padding-bottom: 8px;";
+                        listHtml += `
+                            <li style="${borderStyle}">
+                                <div style="font-weight: 700; color: var(--accent-dark); font-size: 0.92rem; margin-bottom: 3px;">${p.nama} (${p.nrp})</div>
+                                <div style="font-size: 0.84rem; color: var(--text); display: grid; grid-template-columns: 50px 1fr; gap: 2px 4px;">
+                                    <strong>Hari:</strong> <span>${p.hari}</span>
+                                    <strong>Sesi:</strong> <span>Sesi ${p.sesi} (${p.jam})</span>
+                                </div>
+                            </li>
+                        `;
+                    });
+                    listHtml += `</ul>`;
+                    resultContainer.innerHTML = listHtml;
+                }
+            });
+        }
     });
 }
 
