@@ -1290,17 +1290,7 @@ button.sejarah-card:focus{
     box-shadow: 0 8px 16px rgba(64, 43, 43, 0.07);
 }
 
-@media (min-width: 961px){
-    .logo-meaning-item.golden-shadow{
-        grid-column: 1 / -1;
-        align-items: center;
-    }
 
-    .logo-meaning-item.golden-shadow .logo-meaning-image{
-        width: 96px;
-        flex-basis: 96px;
-    }
-}
 
 .logo-meaning-image{
     width: 86px;
@@ -1946,9 +1936,7 @@ a.team-card.spesial {
         border-radius: 14px;
     }
 
-    .logo-meaning-item.golden-shadow{
-        grid-column: auto;
-    }
+
 
     .logo-meaning-image{
         width: 84px;
